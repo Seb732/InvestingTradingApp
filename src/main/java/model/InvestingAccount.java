@@ -7,7 +7,8 @@ public class InvestingAccount extends Account{
     public InvestingAccount() {
     }
 
-    public InvestingAccount(long balance) {
+    
+    public InvestingAccount(double balance) {
         super(balance);
     }
 }

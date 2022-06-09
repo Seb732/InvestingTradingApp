@@ -1,22 +1,22 @@
 package model;
 
 public abstract class Account {
-    long balance;
+    double balance;
 
     public Account() {
     }
 
-    public Account(long balance) {
+    public Account(double balance) {
         this();
         setBalance(balance);
     }
 
 
-    public long getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(long balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 }

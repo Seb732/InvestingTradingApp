@@ -7,17 +7,22 @@ public class User {
     String teleNumb;
     String email;
 
+    PersonalAccount personalAccount;
+    InvestingAccount investingAccount;
+
+
     public User() {
     }
 
-    public User(long id, String first_name, String last_name, String teleNumb, String email) {
+    public User(long id, String first_name, String last_name, String teleNumb, String email, PersonalAccount personalAccount, InvestingAccount investingAccount) {
         this();
         setId(id);
         setFirst_name(first_name);
         setLast_name(last_name);
         setTeleNumb(teleNumb);
         setEmail(email);
-
+        setPersonalAccount(personalAccount);
+        setInvestingAccount(investingAccount);
     }
 
     public long getId() {
@@ -58,5 +63,21 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public PersonalAccount getPersonalAccount() {
+        return personalAccount;
+    }
+
+    public void setPersonalAccount(PersonalAccount personalAccount) {
+        this.personalAccount = personalAccount;
+    }
+
+    public InvestingAccount getInvestingAccount() {
+        return investingAccount;
+    }
+
+    public void setInvestingAccount(InvestingAccount investingAccount) {
+        this.investingAccount = investingAccount;
     }
 }
