@@ -25,6 +25,18 @@ public class User {
         setInvestingAccount(investingAccount);
     }
 
+    public void transferIN(double amount){
+        try{
+            this.getPersonalAccount().withdraw(amount);
+            this.getInvestingAccount().deposit(amount);
+        }
+        catch (IllegalArgumentException | IllegalAccessException ex){
+            assert true; // tbd
+        }
+    }
+
+
+
     public long getId() {
         return id;
     }

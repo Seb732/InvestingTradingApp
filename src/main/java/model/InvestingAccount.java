@@ -5,10 +5,9 @@ public class InvestingAccount extends Account{
 
 
     public InvestingAccount() {
+        this.balance = 0;
     }
 
-    
-    public InvestingAccount(double balance) {
-        super(balance);
-    }
+
+
 }
