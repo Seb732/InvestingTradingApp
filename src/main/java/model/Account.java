@@ -6,4 +6,17 @@ public abstract class Account {
     public Account() {
     }
 
+    public Account(long balance) {
+        this();
+        setBalance(balance);
+    }
+
+
+    public long getBalance() {
+        return balance;
+    }
+
+    public void setBalance(long balance) {
+        this.balance = balance;
+    }
 }
