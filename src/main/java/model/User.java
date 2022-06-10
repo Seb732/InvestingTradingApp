@@ -1,29 +1,26 @@
 package model;
 
+
+import lombok.*;
+import model.Exceptions.ExceptionEmail;
+import model.Exceptions.ExceptionTeleNumb;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 public class User {
     long id;
     String first_name;
     String last_name;
+    @Setter(AccessLevel.NONE)
     String teleNumb;
     String email;
-
     PersonalAccount personalAccount;
     InvestingAccount investingAccount;
 
-
-    public User() {
-    }
-
-    public User(long id, String first_name, String last_name, String teleNumb, String email, PersonalAccount personalAccount, InvestingAccount investingAccount) {
-        this();
-        setId(id);
-        setFirst_name(first_name);
-        setLast_name(last_name);
-        setTeleNumb(teleNumb);
-        setEmail(email);
-        setPersonalAccount(personalAccount);
-        setInvestingAccount(investingAccount);
-    }
 
     public void transferIN(double amount){
         try{
@@ -45,60 +42,18 @@ public class User {
         }
     }
 
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public String getTeleNumb() {
-        return teleNumb;
-    }
-
-    public void setTeleNumb(String teleNumb) {
+    public void setTeleNumb(String teleNumb) throws ExceptionTeleNumb {
+        if (!Validation.validateTeleNumb(teleNumb)){
+            throw new ExceptionTeleNumb("Incorrect phone number");
+        }
         this.teleNumb = teleNumb;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
+    public void setEmail(String email) throws ExceptionEmail {
+        if (!Validation.validateEmail(email)){
+            throw new ExceptionEmail("Incorrect email");
+        }
         this.email = email;
     }
 
-    public PersonalAccount getPersonalAccount() {
-        return personalAccount;
-    }
-
-    public void setPersonalAccount(PersonalAccount personalAccount) {
-        this.personalAccount = personalAccount;
-    }
-
-    public InvestingAccount getInvestingAccount() {
-        return investingAccount;
-    }
-
-    public void setInvestingAccount(InvestingAccount investingAccount) {
-        this.investingAccount = investingAccount;
-    }
 }
