@@ -15,7 +15,6 @@ public class User {
     long id;
     String first_name;
     String last_name;
-    @Setter(AccessLevel.NONE)
     String teleNumb;
     String email;
     PersonalAccount personalAccount;
