@@ -2,8 +2,8 @@ package model.entities;
 
 
 import lombok.*;
-import model.Exceptions.ExceptionEmail;
-import model.Exceptions.ExceptionTeleNumb;
+import model.exceptions.EmailException;
+import model.exceptions.TeleNumbException;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,8 +13,8 @@ import model.Exceptions.ExceptionTeleNumb;
 @EqualsAndHashCode
 public class User {
     long id;
-    String first_name;
-    String last_name;
+    String firstName;
+    String lastName;
     String teleNumb;
     String email;
     PersonalAccount personalAccount;
@@ -27,7 +27,7 @@ public class User {
             this.getInvestingAccount().deposit(amount);
         }
         catch (IllegalArgumentException | IllegalAccessException ex){
-            assert true; // tbd
+            assert true; //TODO
         }
     }
 
@@ -37,20 +37,20 @@ public class User {
             this.getPersonalAccount().deposit(amount);
         }
         catch (IllegalAccessException | IllegalArgumentException ex) {
-            assert true; // tbd
+            assert true; //TODO
         }
     }
 
-    public void setTeleNumb(String teleNumb) throws ExceptionTeleNumb {
+    public void setTeleNumb(String teleNumb) throws TeleNumbException {
         if (!Validation.validateTeleNumb(teleNumb)){
-            throw new ExceptionTeleNumb("Incorrect phone number");
+            throw new TeleNumbException("Incorrect phone number");
         }
         this.teleNumb = teleNumb;
     }
 
-    public void setEmail(String email) throws ExceptionEmail {
+    public void setEmail(String email) throws EmailException {
         if (!Validation.validateEmail(email)){
-            throw new ExceptionEmail("Incorrect email");
+            throw new EmailException("Incorrect email");
         }
         this.email = email;
     }
