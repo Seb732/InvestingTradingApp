@@ -1,6 +1,6 @@
 package model.entities;
 
-public abstract class Account {
+public abstract class   Account {
     double balance;
 
     public Account() {
