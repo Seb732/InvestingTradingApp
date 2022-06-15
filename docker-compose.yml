@@ -1,0 +1,21 @@
+services:
+  java:
+    build:
+      context: .
+      dockerfile: java Dockerfile
+    networks:
+      -network1
+  db:
+    image:
+      postgres:14
+    networks:
+      -network2
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=admin
+networks:
+  network1:
+    name: bridge1
+  network2:
+    name: bridge2
