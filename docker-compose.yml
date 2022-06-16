@@ -1,17 +1,17 @@
+version: '3.8'
 services:
   java:
     build:
       context: .
-      dockerfile: java Dockerfile
+      dockerfile: Dockerfile
     networks:
-      -network1
+      - network1
   db:
-    image:
-      postgres:14
+    image: postgres:14
     networks:
-      -network2
+      - network2
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=admin
 networks:
