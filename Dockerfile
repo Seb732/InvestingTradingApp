@@ -2,10 +2,8 @@ FROM openjdk:18-alpine
 
 LABEL Author="Sebastian Regucki, Maciej Dudziak"
 
-RUN echo "Our first Docker image!"
+ADD target/demo-0.0.1-SNAPSHOT.jar.original /app.jar
 
-ADD target/demo-0.0.1-SNAPSHOT.jar /app.jar
+EXPOSE 8085
 
-WORKDIR /opt
-
-CMD java -jar demo-0.0.1-SNAPSHOT
+CMD ["java","-jar","target/demo-0.0.1-SNAPSHOT.jar.original"]
