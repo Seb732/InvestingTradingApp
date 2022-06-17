@@ -1,7 +1,7 @@
 FROM openjdk:18-alpine
 
-LABEL Author="Sebastian Regucki, Maciej Dudziak"
+ADD target/InvestingTradingApp-0.0.1-SNAPSHOT.jar InvestingTradingApp-0.0.1-SNAPSHOT.jar
 
-ADD target/maven-status/demo-0.0.1-SNAPSHOT.jar target/maven-status/demo-0.0.1-SNAPSHOT.jar
+EXPOSE 8080
 
-CMD ["java","-jar","target/maven-status/demo-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "InvestingTradingApp-0.0.1-SNAPSHOT.jar"]
