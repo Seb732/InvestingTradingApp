@@ -1,5 +1,6 @@
 package com.capgemini.investingtradingapp.entity;
 
+import com.capgemini.investingtradingapp.exception.InsufficientFoundsException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,11 +27,11 @@ public class InvestingAccount extends Account{
      * @param companyID - company's identifier
      * @param size - number of shares to be bought
      * @param ticker - unitary price
-     * @throws Exception - exception is thrown when overdraft
+     * @throws InsufficientFoundsException - exception is thrown when overdraft
      */
-    public void buy(String companyID, int size, double ticker) throws Exception {
+    public void buy(String companyID, int size, double ticker) throws InsufficientFoundsException {
         if (this.balance < (double) size * ticker){
-            throw new Exception("Insufficient founds");
+            throw new InsufficientFoundsException();
         }
         this.balance -= (double) size * ticker;
         portfolio.put(positionID, new Position(companyID, size, ticker));
