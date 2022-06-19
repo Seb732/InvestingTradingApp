@@ -3,8 +3,8 @@ package com.capgemini.investingtradingapp.exception;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class EmailException extends Exception{
-    public EmailException(String message){
+public class IncorrectEmailException extends Exception{
+    public IncorrectEmailException(String message){
         super(message);
     }
 }
