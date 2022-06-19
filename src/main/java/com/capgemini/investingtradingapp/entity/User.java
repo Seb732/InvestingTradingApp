@@ -1,8 +1,8 @@
 package com.capgemini.investingtradingapp.entity;
 
 
-import com.capgemini.investingtradingapp.exception.EmailException;
-import com.capgemini.investingtradingapp.exception.TeleNumbException;
+import com.capgemini.investingtradingapp.exception.IncorrectEmailException;
+import com.capgemini.investingtradingapp.exception.IncorrectTeleNumbException;
 import lombok.*;
 
 @NoArgsConstructor
@@ -57,11 +57,11 @@ public class User {
     /**
      * This method validates the correctness of user's phone number.
      * @param teleNumb - user's phone number
-     * @throws TeleNumbException - if phone number is not correct then custom exception is being thrown
+     * @throws IncorrectTeleNumbException - if phone number is not correct then custom exception is being thrown
      */
-    public void setTeleNumb(String teleNumb) throws TeleNumbException {
+    public void setTeleNumb(String teleNumb) throws IncorrectTeleNumbException {
         if (!Validation.validateTeleNumb(teleNumb)){
-            throw new TeleNumbException("Incorrect phone number");
+            throw new IncorrectTeleNumbException("Incorrect phone number");
         }
         this.teleNumb = teleNumb;
     }
@@ -69,11 +69,11 @@ public class User {
     /**
      * This method validates the correctness of user's email.
      * @param email - user's email
-     * @throws EmailException - if email is not correct then custom exception is being thrown
+     * @throws IncorrectEmailException - if email is not correct then custom exception is being thrown
      */
-    public void setEmail(String email) throws EmailException {
+    public void setEmail(String email) throws IncorrectEmailException {
         if (!Validation.validateEmail(email)){
-            throw new EmailException("Incorrect email");
+            throw new IncorrectEmailException("Incorrect email");
         }
         this.email = email;
     }
