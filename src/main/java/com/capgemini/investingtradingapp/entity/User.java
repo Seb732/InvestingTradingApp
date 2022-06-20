@@ -6,25 +6,38 @@ import com.capgemini.investingtradingapp.exception.IncorrectTeleNumbException;
 import com.capgemini.investingtradingapp.exception.InsufficientFoundsException;
 import lombok.*;
 
+import javax.persistence.*;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 
 
 /**
  * This class represents user's entity. Stores all information fields required. Contains method which enables user
  * to transfer money from personal to investing account and vice-versa.
  */
+@Entity
+@Table(name = "user_")
 public class User {
-    long id;
+    @Id
+    @Column(name = "userid", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    final long id = 0; // default value, the relevant is set directly in database
+    @Column(name = "firstname", nullable = false)
     String firstName;
+    @Column(name = "lastname", nullable = false)
     String lastName;
+    @Column(name = "telenumb", nullable = false)
     String teleNumb;
+    @Column(name = "email", nullable = false)
     String email;
+
+    @Transient
     final PersonalAccount personalAccount = new PersonalAccount();
+    @Transient
     final InvestingAccount investingAccount = new InvestingAccount();
 
     /**
@@ -32,8 +45,8 @@ public class User {
      * @param amount - amount of money to be transferred
      */
     public void transferIN(double amount) throws InsufficientFoundsException {
-            this.getPersonalAccount().withdraw(amount);
-            this.getInvestingAccount().deposit(amount);
+        this.getPersonalAccount().withdraw(amount);
+        this.getInvestingAccount().deposit(amount);
     }
 
     /**
