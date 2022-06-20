@@ -1,25 +1,26 @@
 package com.capgemini.investingtradingapp.entity;
 
 import com.capgemini.investingtradingapp.exception.InsufficientFoundsException;
+import com.capgemini.investingtradingapp.exception.PositionNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 @ToString
 @Getter
 @Setter
 public class InvestingAccount extends Account{
-
-    HashMap<Integer, Position> portfolio;
-    int positionID;
+    private static long id = 1;
+    List<Position> portfolio;
     /**
      * Class for user's investing account. Content development in a progress
      */
     public InvestingAccount() {
         this.balance = 0;
-        portfolio = new HashMap<>();
+        portfolio = new ArrayList<>();
     }
 
     /**
@@ -34,7 +35,7 @@ public class InvestingAccount extends Account{
             throw new InsufficientFoundsException();
         }
         this.balance -= (double) size * ticker;
-        portfolio.put(positionID, new Position(companyID, size, ticker));
+        portfolio.add(new Position(companyID, size, ticker));
     }
 
 
@@ -42,9 +43,13 @@ public class InvestingAccount extends Account{
      * Method enables user to sell position, by removing it from portfolio. Commission should be added in the near future.
      * @param positionID - position identifier in portfolio
      */
-    public void sell(int positionID){
-        this.balance += (double) portfolio.get(positionID).getSize() * portfolio.get(positionID).getTicker();
-        portfolio.remove(positionID);
+    public void sell(int positionID) throws PositionNotFoundException {
+        if (this.portfolio.stream().noneMatch(x -> x.getPositionID() == positionID)){
+            throw new PositionNotFoundException();
+        }
+            this.balance += (double) portfolio.get(positionID).getSize() * portfolio.get(positionID).getTicker();
+            portfolio.remove(positionID);
+
     }
 
 
