@@ -1,6 +1,7 @@
 package com.capgemini.investingtradingapp.entity;
 
 
+import com.capgemini.investingtradingapp.exception.InsufficientFoundsException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,14 +33,14 @@ public abstract class Account {
     /**
      * This method enables user to withdraw money from account
      * @param amount - amount of money to be withdrawn
-     * @throws IllegalAccessException - if the amount is overdrawn, then method throws exception
+     * @throws InsufficientFoundsException - if the amount is overdrawn, then method throws exception
      */
-    public void withdraw(double amount) throws Exception {
+    public void withdraw(double amount) throws InsufficientFoundsException {
         if (amount <= this.balance){
             this.balance -= amount;
         }
         else{
-            throw new Exception("Overdraft!");
+            throw new InsufficientFoundsException();
         }
     }
 }
