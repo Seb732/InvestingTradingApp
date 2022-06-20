@@ -4,18 +4,23 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    networks:
-      - network1
   db:
-    image: postgres:14
-    networks:
-      - network2
+    container_name: postgresDB
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: InvestingTradingApp
     ports:
       - "5432:5432"
-    environment:
-      - POSTGRES_PASSWORD=admin
-networks:
-  network1:
-    name: bridge1
-  network2:
-    name: bridge2
+
+  pgadmin:
+      container_name: pgadmin4_container
+      image: dpage/pgadmin4
+      restart: always
+      environment:
+        PGADMIN_DEFAULT_EMAIL: admin@admin.com
+        PGADMIN_DEFAULT_PASSWORD: 123
+      ports:
+        - "5050:80"
