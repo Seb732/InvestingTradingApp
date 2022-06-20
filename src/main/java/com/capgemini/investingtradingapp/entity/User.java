@@ -3,6 +3,7 @@ package com.capgemini.investingtradingapp.entity;
 
 import com.capgemini.investingtradingapp.exception.IncorrectEmailException;
 import com.capgemini.investingtradingapp.exception.IncorrectTeleNumbException;
+import com.capgemini.investingtradingapp.exception.InsufficientFoundsException;
 import lombok.*;
 
 @NoArgsConstructor
@@ -30,28 +31,18 @@ public class User {
      * This metod enables user to transfer money to be invested using investing account.
      * @param amount - amount of money to be transferred
      */
-    public void transferIN(double amount){
-        try{
+    public void transferIN(double amount) throws InsufficientFoundsException {
             this.getPersonalAccount().withdraw(amount);
             this.getInvestingAccount().deposit(amount);
-        }
-        catch (Exception ex){
-            assert true; //TODO
-        }
     }
 
     /**
      * This method enables user to withdraw money from investing account.
      * @param amount - amount of money to transferred out of the investing account
      */
-    public void transferOut(double amount){
-        try{
-            this.getInvestingAccount().withdraw(amount);
-            this.getPersonalAccount().deposit(amount);
-        }
-        catch (Exception ex) {
-            assert true; //TODO
-        }
+    public void transferOut(double amount) throws InsufficientFoundsException {
+        this.getInvestingAccount().withdraw(amount);
+        this.getPersonalAccount().deposit(amount);
     }
 
     /**
