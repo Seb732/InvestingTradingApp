@@ -4,17 +4,31 @@ import com.capgemini.investingtradingapp.exception.InsufficientFoundsException;
 import com.capgemini.investingtradingapp.exception.PositionNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@ToString
 @Getter
 @Setter
+@Entity
+@Table(name = "investing_accounts")
 public class InvestingAccount extends Account{
-    private static long id = 1;
-    List<Position> portfolio;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "investing_account_id", nullable = false)
+    private long investingAccountID;
+
+    @Column(name = "balance", nullable = false)
+    private double balance;
+
+    @OneToMany(mappedBy = "investingAccount", cascade = CascadeType.ALL)
+    private List<Position> portfolio;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     /**
      * Class for user's investing account. Content development in a progress
      */
@@ -37,8 +51,6 @@ public class InvestingAccount extends Account{
         this.balance -= (double) size * ticker;
         portfolio.add(new Position(companyID, size, ticker));
     }
-
-
     /**
      * Method enables user to sell position, by removing it from portfolio. Commission should be added in the near future.
      * @param positionID - position identifier in portfolio
@@ -49,9 +61,6 @@ public class InvestingAccount extends Account{
         }
             this.balance += (double) portfolio.get(positionID).getSize() * portfolio.get(positionID).getTicker();
             portfolio.remove(positionID);
-
     }
-
-
 
 }
