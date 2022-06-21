@@ -20,25 +20,26 @@ import javax.persistence.*;
  * to transfer money from personal to investing account and vice-versa.
  */
 @Entity
-@Table(name = "user_")
+@Table(name = "users")
 public class User {
     @Id
-    @Column(name = "userid", nullable = false)
+    @Column(name = "user_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    final long id = 0; // default value, the relevant is set directly in database
-    @Column(name = "firstname", nullable = false)
-    String firstName;
-    @Column(name = "lastname", nullable = false)
-    String lastName;
-    @Column(name = "telenumb", nullable = false)
-    String teleNumb;
+    private long userID;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
+    @Column(name = "tele_numb", nullable = false)
+    private String teleNumb;
     @Column(name = "email", nullable = false)
-    String email;
+    private String email;
 
     @Transient
-    final PersonalAccount personalAccount = new PersonalAccount();
+    private final PersonalAccount personalAccount = new PersonalAccount();
+
     @Transient
-    final InvestingAccount investingAccount = new InvestingAccount();
+    private final InvestingAccount investingAccount = new InvestingAccount();
 
     /**
      * This metod enables user to transfer money to be invested using investing account.
