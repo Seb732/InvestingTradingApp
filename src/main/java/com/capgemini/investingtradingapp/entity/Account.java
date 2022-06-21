@@ -18,7 +18,7 @@ public abstract class Account {
     /**
      * the account balance field
      */
-    double balance;
+    private double balance;
 
     /**
      * This method enables user to deposit money
