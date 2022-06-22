@@ -2,8 +2,10 @@ package com.capgemini.investingtradingapp.entity;
 
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 
@@ -34,11 +36,22 @@ public class Position {
     @Column(name = "ticker", nullable = false)
     private double ticker;
 
+    @Column(name = "position_status", nullable = false)
+    private PositionStatus positionStatus;
+
+
+    @CreatedDate
+    @Column(name = "open_date", nullable = false)
+    private LocalDateTime openDate;
+
+    @Column(name = "close_date")
+    private LocalDateTime closeDate;
+
+
     @ManyToOne()
     @JoinColumn(name = "investing_account_id", nullable = false)
     private InvestingAccount investingAccount;
 
-    //TODO need to add timestamp for time-tracking
 
     public Position(String companyID, int size, double ticker){
         this.setCompanyID(companyID);
