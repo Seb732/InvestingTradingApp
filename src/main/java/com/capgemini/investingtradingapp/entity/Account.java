@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
+
 /**
  * Abstract class for user's account
  */
@@ -18,7 +20,8 @@ public abstract class Account {
     /**
      * the account balance field
      */
-    private double balance;
+
+    protected double balance;
 
     /**
      * This method enables user to deposit money
@@ -36,11 +39,11 @@ public abstract class Account {
      * @throws InsufficientFoundsException - if the amount is overdrawn, then method throws exception
      */
     public void withdraw(double amount) throws InsufficientFoundsException {
-        if (amount <= this.balance){
+        if (amount <= this.balance && amount >= 0){
             this.balance -= amount;
         }
         else{
-            throw new InsufficientFoundsException();
+            throw new InsufficientFoundsException("Not enough balance");
         }
     }
 }

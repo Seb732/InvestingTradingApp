@@ -20,9 +20,6 @@ public class InvestingAccount extends Account{
     @Column(name = "investing_account_id", nullable = false)
     private long investingAccountID;
 
-    @Column(name = "balance", nullable = false)
-    private double balance;
-
     @OneToMany(mappedBy = "investingAccount", cascade = CascadeType.ALL)
     private List<Position> portfolio;
 
