@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 /**
  * Abstract class for user's account
  */
@@ -19,6 +20,7 @@ public abstract class Account {
     /**
      * the account balance field
      */
+
     protected double balance;
 
     /**
@@ -30,7 +32,7 @@ public abstract class Account {
             this.balance += amount;
         }
         else{
-            throw new InvalidAmountException();
+            throw new InvalidAmountException("Amount deposited has to be bigger than 1");
         }
     }
 
@@ -39,12 +41,15 @@ public abstract class Account {
      * @param amount - amount of money to be withdrawn
      * @throws InsufficientFoundsException - if the amount is overdrawn, then method throws exception
      */
-    public void withdraw(double amount) throws InsufficientFoundsException {
-        if (amount <= this.balance){
+    public void withdraw(double amount) throws InsufficientFoundsException, InvalidAmountException {
+        if (amount <= this.balance && amount >= 0){
             this.balance -= amount;
         }
-        else{
-            throw new InsufficientFoundsException();
+        else if(amount < 0) {
+            throw new InvalidAmountException("Amount has to be bigger than 0");
+        }
+        else {
+            throw new InsufficientFoundsException("Not enough balance");
         }
     }
 }
