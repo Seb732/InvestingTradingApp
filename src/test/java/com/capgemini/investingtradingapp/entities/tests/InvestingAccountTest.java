@@ -2,6 +2,7 @@ package com.capgemini.investingtradingapp.entities.tests;
 
 import com.capgemini.investingtradingapp.entity.InvestingAccount;
 import com.capgemini.investingtradingapp.exception.InsufficientFoundsException;
+import com.capgemini.investingtradingapp.exception.InvalidAmountException;
 import com.capgemini.investingtradingapp.exception.PositionNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,13 +23,20 @@ public class InvestingAccountTest {
 
 
     @Test
-    void deposit_increases_balance_correctly(){
+    void deposit_increases_balance_correctly() throws InvalidAmountException {
         investingAccount.deposit(10);
         assertEquals(10,investingAccount.getBalance());
     }
 
     @Test
-    void withdraw_decreases_balance_correctly() throws InsufficientFoundsException {
+    void deposit_throws_invalid_amount_exception(){
+        assertThrows(InvalidAmountException.class, () -> {
+            investingAccount.deposit(0.5);
+        });
+    }
+
+    @Test
+    void withdraw_decreases_balance_correctly() throws InsufficientFoundsException, InvalidAmountException {
         investingAccount.deposit(10);
         investingAccount.withdraw(5);
         assertEquals(5,investingAccount.getBalance());
@@ -41,6 +49,13 @@ public class InvestingAccountTest {
         });
     }
 
+    @Test
+    void withdraw_throws_invalid_amount_exception(){
+        assertThrows(InvalidAmountException.class, () -> {
+            investingAccount.withdraw(-15);
+        });
+    }
+
 
     @Test
     void buy_throws_insufficient_founds_exception(){
@@ -50,7 +65,7 @@ public class InvestingAccountTest {
     }
 
     @Test
-    void buy_adds_position_to_portfolio_correctly() throws InsufficientFoundsException {
+    void buy_adds_position_to_portfolio_correctly() throws InsufficientFoundsException, InvalidAmountException {
         investingAccount.deposit(10);
         investingAccount.buy("testPosition",2,3);
         assertTrue(investingAccount.getPortfolio().size() > 0);
@@ -60,14 +75,14 @@ public class InvestingAccountTest {
     }
 
     @Test
-    void buy_decreases_balance_after_successful_addition_correctly() throws InsufficientFoundsException {
+    void buy_decreases_balance_after_successful_addition_correctly() throws InsufficientFoundsException, InvalidAmountException {
         investingAccount.deposit(10);
         investingAccount.buy("testPosition",2,3);
         assertEquals(4,investingAccount.getBalance());
     }
 
     @Test
-    void sell_throws_position_not_found_exception() throws InsufficientFoundsException {
+    void sell_throws_position_not_found_exception() throws InsufficientFoundsException, InvalidAmountException {
         //throwing exception while portfolio is empty
         assertThrows(PositionNotFoundException.class, () -> {
             investingAccount.sell(12321);
@@ -81,7 +96,7 @@ public class InvestingAccountTest {
     }
 
     @Test
-    void sell_increases_balance_correctly() throws InsufficientFoundsException, PositionNotFoundException {
+    void sell_increases_balance_correctly() throws InsufficientFoundsException, PositionNotFoundException, InvalidAmountException {
         investingAccount.deposit(10);
         investingAccount.buy("testPosition",2,3);
         investingAccount.sell(0);
@@ -89,7 +104,7 @@ public class InvestingAccountTest {
     }
 
     @Test
-    void sell_removes_position_from_portfolio_correctly() throws InsufficientFoundsException, PositionNotFoundException {
+    void sell_removes_position_from_portfolio_correctly() throws InsufficientFoundsException, PositionNotFoundException, InvalidAmountException {
         investingAccount.deposit(10);
         investingAccount.buy("testPosition",2,3);
         investingAccount.sell(0);
