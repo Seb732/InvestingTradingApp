@@ -2,6 +2,7 @@ package com.capgemini.investingtradingapp.entity;
 
 
 import com.capgemini.investingtradingapp.exception.InsufficientFoundsException;
+import com.capgemini.investingtradingapp.exception.InvalidAmountException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,15 +19,18 @@ public abstract class Account {
     /**
      * the account balance field
      */
-    private double balance;
+    protected double balance;
 
     /**
      * This method enables user to deposit money
      * @param amount - amount of money to be deposited
      */
-    public void deposit(double amount){
+    public void deposit(double amount) throws InvalidAmountException {
         if (amount > 1){
             this.balance += amount;
+        }
+        else{
+            throw new InvalidAmountException();
         }
     }
 
