@@ -90,7 +90,7 @@ class UserTest {
     }
 
     @Test
-    void set_email_throws_incorrect_tele_numb_exception(){
+    void set_email_throws_incorrect_email_exception(){
         assertThrows(IncorrectEmailException.class, () -> {
             user.setEmail(" ");
         });
@@ -109,7 +109,7 @@ class UserTest {
     }
 
     @Test
-    void set_email_correctly_sets_tele_numb() throws IncorrectEmailException {
+    void set_email_correctly_sets_email_numb() throws IncorrectEmailException {
         user.setEmail("testEmail123@gmail.com");
         assertEquals(user.getEmail(),"testEmail123@gmail.com");
     }
