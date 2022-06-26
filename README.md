@@ -48,5 +48,6 @@ Connected with:
     <li>See the charts of stock prices etc.</li>
     <li>*experimental* User can see stock price prediction</li>
 </ul>
+.
 
 
