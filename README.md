@@ -1,3 +1,33 @@
+#### Api usage example: 
+```yaml
+{
+    "userID": 0,
+    "firstName": "Jan",
+    "lastName": "Duda",
+    "teleNumb": "507-321-312",
+    "email": "sebasd@gmail.com",
+    "personalAccount": {
+        "balance": 5000.0
+    },
+    "investingAccount": {
+        "balance": 3400.0,
+        "investingAccountID": 0,
+        "portfolio": [
+            {
+                "positionID": 0,
+                "companyID": "TESLA",
+                "size": 4,
+                "ticker": 400.0,
+                "positionStatus": "OPEN",
+                "openDate": "2022-06-26T22:00:34.9624596",
+                "closeDate": null,
+                "investingAccount": null
+            }
+        ]
+    }
+}
+```
+
 
 ### Functionalities
 ___
