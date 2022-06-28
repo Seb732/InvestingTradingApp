@@ -3,6 +3,8 @@ package com.capgemini.investingtradingapp.controller;
 import com.capgemini.investingtradingapp.dto.UserDTO;
 import com.capgemini.investingtradingapp.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -21,11 +23,10 @@ public class UserController {
     }
 
     @GetMapping
-    @ResponseBody
-    public Optional<UserDTO> getUserByFirstNameAndLastName(
+    public ResponseEntity<Optional<UserDTO>> getUserByFirstNameAndLastName(
             @RequestParam final String firstName,
             @RequestParam final String lastName
     ) {
-        return userService.findByFirstNameAndLastName(firstName, lastName);
+        return new ResponseEntity<>(userService.findByFirstNameAndLastName(firstName, lastName), HttpStatus.OK);
     }
 }
