@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @AllArgsConstructor
 @Service
@@ -25,5 +27,9 @@ public class UserService {
     public UserDTO save(UserDTO userDTO) {
         User user = userRepository.save(modelMapper.map(userDTO, User.class));
         return modelMapper.map(user, UserDTO.class);
+    }
+
+    public Optional<UserDTO> findByFirstNameAndLastName(String firstName, String lastName) {
+        return userRepository.findUserByFirstNameAndLastName(firstName, lastName).map(x -> modelMapper.map(x, UserDTO.class));
     }
 }
