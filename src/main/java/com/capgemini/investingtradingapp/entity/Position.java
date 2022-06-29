@@ -1,7 +1,10 @@
 package com.capgemini.investingtradingapp.entity;
 
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -36,24 +39,23 @@ public class Position {
     @Column(name = "ticker", nullable = false)
     private double ticker;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "position_status", nullable = false)
-    private PositionStatus positionStatus;
-
+    private PositionStatus positionStatus = PositionStatus.OPEN;
 
     @CreatedDate
     @Column(name = "open_date", nullable = false)
-    private LocalDateTime openDate;
+    private LocalDateTime openDate = LocalDateTime.now();
 
     @Column(name = "close_date")
     private LocalDateTime closeDate;
 
-
-    @ManyToOne()
-    @JoinColumn(name = "investing_account_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "investing_account_id", referencedColumnName = "investing_account_id", nullable = false)
     private InvestingAccount investingAccount;
 
 
-    public Position(String companyID, int size, double ticker){
+    public Position(String companyID, int size, double ticker) {
         this.setCompanyID(companyID);
         this.setSize(size);
         this.setTicker(ticker);
