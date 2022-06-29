@@ -23,10 +23,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
-    @Column(name = "user_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", unique = true, nullable = false)
     private long userID;
+
     @Column(name = "first_name", nullable = false)
     private String firstName;
     @Column(name = "last_name", nullable = false)
@@ -36,14 +38,15 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Transient
-    private final PersonalAccount personalAccount = new PersonalAccount();
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private PersonalAccount personalAccount = new PersonalAccount();
 
-    @Transient
-    private final InvestingAccount investingAccount = new InvestingAccount();
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private InvestingAccount investingAccount = new InvestingAccount();
 
     /**
      * This metod enables user to transfer money to be invested using investing account.
+     *
      * @param amount - amount of money to be transferred
      */
     public void transferIN(double amount) throws InsufficientFoundsException, InvalidAmountException {
