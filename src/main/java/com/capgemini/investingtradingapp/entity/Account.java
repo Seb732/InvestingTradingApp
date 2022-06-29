@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+
 
 /**
  * Abstract class for user's account
@@ -16,11 +19,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@MappedSuperclass
 public abstract class Account {
     /**
      * the account balance field
      */
 
+
+    @Column(name = "balance", nullable = false)
     protected double balance;
 
     /**
