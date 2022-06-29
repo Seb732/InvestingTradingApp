@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -21,12 +21,18 @@ public class UserController {
         return userService.save(user);
     }
 
+
     @GetMapping
-    public ResponseEntity<UserDTO> getUserByFirstNameAndLastName(
+    public ResponseEntity<List<UserDTO>> getUserByFirstNameAndLastName(
             @RequestParam final String firstName,
             @RequestParam final String lastName
     ) {
-        Optional<UserDTO> userDTO = userService.findByFirstNameAndLastName(firstName, lastName);
-        return userDTO.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        List<UserDTO> users = userService.findByFirstNameAndLastName(firstName, lastName);
+        if (!users.isEmpty()) return new ResponseEntity<>(users, HttpStatus.OK);
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+
+
 }
