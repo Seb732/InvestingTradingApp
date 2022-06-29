@@ -12,10 +12,9 @@ import java.util.Optional;
 @RestController
 @AllArgsConstructor
 
-@RequestMapping("/employee")
+@RequestMapping("/user")
 public class UserController {
     private final UserService userService;
-
 
     @PostMapping
     public UserDTO newUser(@RequestBody final UserDTO user) {
@@ -23,10 +22,11 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Optional<UserDTO>> getUserByFirstNameAndLastName(
+    public ResponseEntity<UserDTO> getUserByFirstNameAndLastName(
             @RequestParam final String firstName,
             @RequestParam final String lastName
     ) {
-        return new ResponseEntity<>(userService.findByFirstNameAndLastName(firstName, lastName), HttpStatus.OK);
+        Optional<UserDTO> userDTO = userService.findByFirstNameAndLastName(firstName, lastName);
+        return userDTO.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
