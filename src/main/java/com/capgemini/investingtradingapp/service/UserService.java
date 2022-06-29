@@ -25,7 +25,10 @@ public class UserService {
     }
 
     public UserDTO save(UserDTO userDTO) {
-        User user = userRepository.save(modelMapper.map(userDTO, User.class));
+        User user = modelMapper.map(userDTO, User.class);
+        user.getInvestingAccount().setUser(user);
+        user.getPersonalAccount().setUser(user);
+        userRepository.save(user);
         return modelMapper.map(user, UserDTO.class);
     }
 
