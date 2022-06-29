@@ -2,6 +2,7 @@ package com.capgemini.investingtradingapp.service;
 
 import com.capgemini.investingtradingapp.dto.UserDTO;
 import com.capgemini.investingtradingapp.entity.User;
+import com.capgemini.investingtradingapp.exception.UserNotFoundException;
 import com.capgemini.investingtradingapp.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,17 +21,28 @@ public class UserService {
     @Autowired
     private final ModelMapper modelMapper;
 
-
-    public List<UserDTO> GetAll() {
-        return userRepository.findAll().stream().map(x -> modelMapper.map(x, UserDTO.class)).collect(Collectors.toList());
-    }
-
     public UserDTO save(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
         user.getInvestingAccount().setUser(user);
         user.getPersonalAccount().setUser(user);
         userRepository.save(user);
         return modelMapper.map(user, UserDTO.class);
+    }
+
+    public void delete(long id) {
+        if (userRepository.findById(id).isEmpty()) {
+            throw new UserNotFoundException("User with ID: " + id + "has not been found");
+        } else {
+            userRepository.deleteById(id);
+        }
+    }
+
+    public void update(long id, UserDTO userDTO) {
+        //TODO
+    }
+
+    public List<UserDTO> GetAll() {
+        return userRepository.findAll().stream().map(x -> modelMapper.map(x, UserDTO.class)).collect(Collectors.toList());
     }
 
     public List<UserDTO> findByFirstNameAndLastName(String firstName, String lastName) {
