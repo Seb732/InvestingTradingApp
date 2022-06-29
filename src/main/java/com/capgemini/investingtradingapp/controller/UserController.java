@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -22,16 +23,19 @@ public class UserController {
     }
 
 
-    @GetMapping
-    public ResponseEntity<List<UserDTO>> getUserByFirstNameAndLastName(
-            @RequestParam final String firstName,
-            @RequestParam final String lastName
-    ) {
-        List<UserDTO> users = userService.findByFirstNameAndLastName(firstName, lastName);
-        if (!users.isEmpty()) return new ResponseEntity<>(users, HttpStatus.OK);
-        else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping()
+    public ResponseEntity<List<UserDTO>> getByFirstNameAndLastName(
+            @RequestParam final Map<String, String> allParams) {
+        if (allParams.containsKey("firstName") && allParams.containsKey("lastName")) {
+            List<UserDTO> users = userService.findByFirstNameAndLastName(allParams.get("firstName"), allParams.get("lastName"));
+            return !users.isEmpty() ? new ResponseEntity<>(users, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        if (allParams.containsKey("teleNumb") && allParams.containsKey("email")) {
+            List<UserDTO> users = userService.findByTeleNumbAndEmail(allParams.get("teleNumb"), allParams.get("email"));
+            return !users.isEmpty() ? new ResponseEntity<>(users, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<UserDTO> users = userService.GetAll();
+        return !users.isEmpty() ? new ResponseEntity<>(users, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 

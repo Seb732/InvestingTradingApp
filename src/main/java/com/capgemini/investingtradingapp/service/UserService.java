@@ -21,8 +21,8 @@ public class UserService {
     private final ModelMapper modelMapper;
 
 
-    public Iterable<User> GetAll() {
-        return userRepository.findAll();
+    public List<UserDTO> GetAll() {
+        return userRepository.findAll().stream().map(x -> modelMapper.map(x, UserDTO.class)).collect(Collectors.toList());
     }
 
     public UserDTO save(UserDTO userDTO) {
@@ -35,5 +35,9 @@ public class UserService {
 
     public List<UserDTO> findByFirstNameAndLastName(String firstName, String lastName) {
         return userRepository.findUserByFirstNameAndLastName(firstName, lastName).stream().map(x -> modelMapper.map(x, UserDTO.class)).collect(Collectors.toList());
+    }
+
+    public List<UserDTO> findByTeleNumbAndEmail(String teleNumb, String email) {
+        return userRepository.findUserByTeleNumbAndEmail(teleNumb, email).stream().map(x -> modelMapper.map(x, UserDTO.class)).collect(Collectors.toList());
     }
 }
