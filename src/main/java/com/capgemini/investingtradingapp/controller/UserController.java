@@ -1,10 +1,11 @@
 package com.capgemini.investingtradingapp.controller;
 
 import com.capgemini.investingtradingapp.dto.UserDTO;
+import com.capgemini.investingtradingapp.exception.IncorrectEmailException;
+import com.capgemini.investingtradingapp.exception.IncorrectTeleNumbException;
 import com.capgemini.investingtradingapp.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,16 +29,17 @@ public class UserController {
     public void delete(
             @RequestParam final long id
     ) {
+
         userService.delete(id);
     }
 
     @PutMapping
-    ResponseEntity<UserDTO> update(
-            @RequestParam final String id
-
-    ) {
-        //TODO
-        return null;
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(
+            @RequestParam final long id,
+            @RequestBody final UserDTO user
+    ) throws IncorrectEmailException, IncorrectTeleNumbException {
+        userService.update(id, user);
     }
 
     @GetMapping
