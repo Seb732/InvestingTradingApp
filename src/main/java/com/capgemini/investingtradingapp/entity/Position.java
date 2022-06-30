@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -43,9 +43,9 @@ public class Position {
     @Column(name = "position_status", nullable = false)
     private PositionStatus positionStatus = PositionStatus.OPEN;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "open_date", nullable = false)
-    private LocalDateTime openDate = LocalDateTime.now();
+    private LocalDateTime openDate;
 
     @Column(name = "close_date")
     private LocalDateTime closeDate;

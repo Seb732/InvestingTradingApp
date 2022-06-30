@@ -5,12 +5,12 @@ import com.capgemini.investingtradingapp.exception.IncorrectEmailException;
 import com.capgemini.investingtradingapp.exception.IncorrectTeleNumbException;
 import com.capgemini.investingtradingapp.exception.InsufficientFoundsException;
 import com.capgemini.investingtradingapp.exception.InvalidAmountException;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -26,7 +26,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", unique = true, nullable = false)
+    @Column(name = "user_id", nullable = false)
     private long userID;
 
     @Column(name = "first_name", nullable = false)
@@ -43,6 +43,19 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private InvestingAccount investingAccount = new InvestingAccount();
+
+    public User(long userID, String firstName, String lastName, String teleNumb, String email, PersonalAccount personalAccount, InvestingAccount investingAccount) {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.teleNumb = teleNumb;
+        this.email = email;
+        this.personalAccount = personalAccount;
+        this.investingAccount = investingAccount;
+    }
+
+    public User() {
+    }
 
     /**
      * This metod enables user to transfer money to be invested using investing account.

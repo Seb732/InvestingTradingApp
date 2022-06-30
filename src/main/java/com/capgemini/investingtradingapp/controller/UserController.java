@@ -18,17 +18,17 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDTO> save(@RequestBody final UserDTO user) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void save(@RequestBody final UserDTO user) {
         userService.save(user);
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping
-    ResponseEntity<UserDTO> delete(
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(
             @RequestParam final long id
     ) {
         userService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
@@ -41,27 +41,22 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getByFirstNameAndLastName(
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserDTO> getByFirstNameAndLastName(
             @RequestParam final Map<String, String> allParams) {
 
         if (allParams.containsKey("firstName") && allParams.containsKey("lastName")) {
 
-            List<UserDTO> users = userService.findByFirstNameAndLastName(allParams.get("firstName"), allParams.get("lastName"));
-
-            return !users.isEmpty() ? new ResponseEntity<>(users, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return userService.findByFirstNameAndLastName(allParams.get("firstName"), allParams.get("lastName"));
         }
 
 
         if (allParams.containsKey("teleNumb") && allParams.containsKey("email")) {
 
-            List<UserDTO> users = userService.findByTeleNumbAndEmail(allParams.get("teleNumb"), allParams.get("email"));
-
-            return !users.isEmpty() ? new ResponseEntity<>(users, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return userService.findByTeleNumbAndEmail(allParams.get("teleNumb"), allParams.get("email"));
         }
 
-
-        List<UserDTO> users = userService.GetAll();
-        return !users.isEmpty() ? new ResponseEntity<>(users, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return userService.getAll();
     }
 
 

@@ -26,7 +26,7 @@ public abstract class Account {
      */
 
 
-    @Column(name = "balance", nullable = false)
+    @Column(name = "balance")
     protected double balance;
 
     /**

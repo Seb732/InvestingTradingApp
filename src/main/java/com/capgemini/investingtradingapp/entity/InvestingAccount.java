@@ -49,7 +49,7 @@ public class InvestingAccount extends Account {
             throw new InsufficientFoundsException();
         }
         this.balance -= (double) size * ticker;
-        this.portfolio.add(new Position(companyID, size, ticker));
+        portfolio.add(new Position(companyID, size, ticker));
     }
 
     /**
@@ -60,8 +60,8 @@ public class InvestingAccount extends Account {
         if (this.portfolio.stream().noneMatch(x -> x.getPositionID() == positionID)) {
             throw new PositionNotFoundException();
         }
-        this.balance += (double) this.portfolio.get(positionID).getSize() * this.portfolio.get(positionID).getTicker();
-        this.portfolio.remove(positionID);
+        this.balance += (double) portfolio.get(positionID).getSize() * portfolio.get(positionID).getTicker();
+        portfolio.remove(positionID);
     }
 
 }
