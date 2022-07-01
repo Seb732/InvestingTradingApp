@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -52,14 +51,18 @@ public class UserService {
     }
 
     public List<UserDTO> getAll() {
-        return userRepository.findAll().stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
+        return mapAll(userRepository.findAll());
     }
 
     public List<UserDTO> findByFirstNameAndLastName(String firstName, String lastName) {
-        return userRepository.findUserByFirstNameAndLastName(firstName, lastName).stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
+        return mapAll(userRepository.findUserByFirstNameAndLastName(firstName, lastName));
     }
 
     public List<UserDTO> findByTeleNumbAndEmail(String teleNumb, String email) {
-        return userRepository.findUserByTeleNumbAndEmail(teleNumb, email).stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
+        return mapAll(userRepository.findUserByTeleNumbAndEmail(teleNumb, email));
+    }
+
+    private List<UserDTO> mapAll(List<User> users) {
+        return users.stream().map(user -> modelMapper.map(user, UserDTO.class)).toList();
     }
 }

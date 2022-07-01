@@ -36,7 +36,6 @@ public class UserController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<UserDTO> read(@RequestParam final Map<String, String> allParams) {
 
         if (allParams.containsKey("firstName") && allParams.containsKey("lastName")) {
