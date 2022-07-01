@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -22,13 +23,12 @@ public class CompanyController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@RequestBody final CompanyDto companyDto) {
+    public void save(@Valid @RequestBody final CompanyDto companyDto) {
         companyService.save(companyDto);
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<CompanyDto> read(@RequestParam final Map<String, String> allParams) {
+    public List<CompanyDto> read(@Valid @RequestParam final Map<String, String> allParams) {
 
         if (allParams.containsKey("companyName")) {
             return List.of(companyService.getByCompanyName(allParams.get("companyName")));
@@ -43,13 +43,13 @@ public class CompanyController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestParam final long id, @RequestParam final CompanyDto companyDto) {
+    public void update(@Valid @RequestParam final long id, @RequestParam final CompanyDto companyDto) {
         companyService.update(id, companyDto);
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@RequestParam final long id) {
+    public void delete(@Valid @RequestParam final long id) {
         companyService.delete(id);
     }
 }
