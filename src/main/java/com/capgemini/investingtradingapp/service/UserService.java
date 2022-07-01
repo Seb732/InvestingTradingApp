@@ -5,19 +5,21 @@ import com.capgemini.investingtradingapp.entity.User;
 import com.capgemini.investingtradingapp.exception.IncorrectEmailException;
 import com.capgemini.investingtradingapp.exception.IncorrectTeleNumbException;
 import com.capgemini.investingtradingapp.repository.UserRepository;
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-@AllArgsConstructor
 @Service
 public class UserService {
-    private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     public void save(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
@@ -50,14 +52,14 @@ public class UserService {
     }
 
     public List<UserDTO> getAll() {
-        return userRepository.findAll().stream().map(x -> modelMapper.map(x, UserDTO.class)).collect(Collectors.toList());
+        return userRepository.findAll().stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
     }
 
     public List<UserDTO> findByFirstNameAndLastName(String firstName, String lastName) {
-        return userRepository.findUserByFirstNameAndLastName(firstName, lastName).stream().map(x -> modelMapper.map(x, UserDTO.class)).collect(Collectors.toList());
+        return userRepository.findUserByFirstNameAndLastName(firstName, lastName).stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
     }
 
     public List<UserDTO> findByTeleNumbAndEmail(String teleNumb, String email) {
-        return userRepository.findUserByTeleNumbAndEmail(teleNumb, email).stream().map(x -> modelMapper.map(x, UserDTO.class)).collect(Collectors.toList());
+        return userRepository.findUserByTeleNumbAndEmail(teleNumb, email).stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
     }
 }
