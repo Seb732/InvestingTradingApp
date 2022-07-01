@@ -21,7 +21,7 @@ public class InvestingAccount extends Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "investing_account_id", nullable = false)
+    @Column(name = "investing_account_id")
     private long investingAccountID;
 
     @OneToMany(mappedBy = "investingAccount", cascade = CascadeType.ALL)

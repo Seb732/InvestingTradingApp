@@ -27,7 +27,7 @@ public class Position {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "position_id", nullable = false)
+    @Column(name = "position_id")
     private long positionID;
 
     @Column(name = "company_id", nullable = false)

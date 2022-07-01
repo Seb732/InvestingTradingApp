@@ -23,7 +23,7 @@ public class PersonalAccount extends Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "personal_account_id", nullable = false)
+    @Column(name = "personal_account_id")
     private long personalAccountID;
 
     @OneToOne(cascade = CascadeType.ALL, optional = false)
