@@ -31,7 +31,7 @@ public class Position {
     private long positionID;
 
     @Column(name = "company_id", nullable = false)
-    private String companyID;
+    private long companyID;
 
     @Column(name = "size", nullable = false)
     private int size;
@@ -55,9 +55,4 @@ public class Position {
     private InvestingAccount investingAccount;
 
 
-    public Position(String companyID, int size, double ticker) {
-        this.setCompanyID(companyID);
-        this.setSize(size);
-        this.setTicker(ticker);
-    }
 }
