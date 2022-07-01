@@ -33,7 +33,6 @@ public class InvestingAccount extends Account {
 
     public InvestingAccount(double balance) {
         super(balance);
-
     }
 
     /**
@@ -44,12 +43,16 @@ public class InvestingAccount extends Account {
      * @param ticker    - unitary price
      * @throws InsufficientFoundsException - exception is thrown when overdraft
      */
-    public void buy(String companyID, int size, double ticker) throws InsufficientFoundsException {
-        if (this.balance < (double) size * ticker){
+    public void buy(long companyID, int size, double ticker) throws InsufficientFoundsException {
+        if (this.balance < (double) size * ticker) {
             throw new InsufficientFoundsException();
         }
         this.balance -= (double) size * ticker;
-        portfolio.add(new Position(companyID, size, ticker));
+        Position position = new Position();
+        position.setCompanyID(companyID);
+        position.setSize(size);
+        position.setTicker(ticker);
+        portfolio.add(position);
     }
 
     /**
@@ -63,5 +66,6 @@ public class InvestingAccount extends Account {
         this.balance += (double) portfolio.get(positionID).getSize() * portfolio.get(positionID).getTicker();
         portfolio.remove(positionID);
     }
+
 
 }
