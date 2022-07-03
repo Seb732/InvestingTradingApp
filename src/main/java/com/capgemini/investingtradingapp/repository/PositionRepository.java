@@ -2,13 +2,15 @@ package com.capgemini.investingtradingapp.repository;
 
 import com.capgemini.investingtradingapp.entity.Position;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.List;
 
 public interface PositionRepository extends JpaRepository<Position, Long> {
-    Optional<Position> findPositionByCompanyID(String companyID);
-    Optional<Position> findPositionByOpenDateAfter(LocalDateTime openDate);
-    Optional<Position> findPositionByTickerGreaterThan(double ticker);
+    Position findPositionByCompanyID(long id);
+
+    List<Position> findPositionByOpenDateAfter(LocalDateTime openDate);
+
+    List<Position> findPositionByTickerGreaterThan(double ticker);
+
 }
