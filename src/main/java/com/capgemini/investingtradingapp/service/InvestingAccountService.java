@@ -26,16 +26,16 @@ public class InvestingAccountService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public void buyPosition(long accountID, PositionDTO positionDTO) throws InsufficientFoundsException {
+    public void buyPosition(long investingAccountID, PositionDTO positionDTO) throws InsufficientFoundsException {
         Position position = modelMapper.map(positionDTO, Position.class);
-        InvestingAccount investingAccount = investingAccountRepository.findById(accountID).get();
+        InvestingAccount investingAccount = investingAccountRepository.findById(investingAccountID).get();
         investingAccount.buy(position.getCompanyID(), position.getSize(), position.getTicker(), investingAccount);
 
         investingAccountRepository.save(investingAccount);
     }
 
-    public void sellPosition(long accountID, long positionID) throws PositionNotFoundException {
-        InvestingAccount investingAccount = investingAccountRepository.findById(accountID).get();
+    public void sellPosition(long investingAccountID, long positionID) throws PositionNotFoundException {
+        InvestingAccount investingAccount = investingAccountRepository.findById(investingAccountID).get();
         investingAccount.sell(positionRepository.findById(positionID).get());
         Position position = positionRepository.findById(positionID).get();
         position.setPositionStatus(PositionStatus.CLOSED);

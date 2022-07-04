@@ -6,7 +6,15 @@ import com.capgemini.investingtradingapp.exception.IncorrectTeleNumbException;
 import com.capgemini.investingtradingapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -25,14 +33,14 @@ public class UserController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@RequestParam final long id) {
-        userService.delete(id);
+    public void delete(@RequestParam final long userID) {
+        userService.delete(userID);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestParam final long id, @RequestBody final UserDTO user) throws IncorrectEmailException, IncorrectTeleNumbException {
-        userService.update(id, user);
+    public void update(@RequestParam final long userID, @RequestBody final UserDTO user) throws IncorrectEmailException, IncorrectTeleNumbException {
+        userService.update(userID, user);
     }
 
     @GetMapping
@@ -48,5 +56,6 @@ public class UserController {
 
         return userService.getAll();
     }
+
 
 }

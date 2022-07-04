@@ -35,8 +35,8 @@ public class CompanyService {
         return modelMapper.map(companyRepository.findCompanyByTickerSymbol(tickerSymbol), CompanyDto.class);
     }
 
-    public void update(long id, CompanyDto companyDto) {
-        Company company = companyRepository.findById(id).get();
+    public void update(long companyID, CompanyDto companyDto) {
+        Company company = companyRepository.findById(companyID).get();
         Company company1 = modelMapper.map(companyDto, Company.class);
 
         if (company1.getCompanyName() != null) {
@@ -49,8 +49,8 @@ public class CompanyService {
 
     }
 
-    public void delete(long id) {
-        companyRepository.deleteById(id);
+    public void delete(long companyID) {
+        companyRepository.deleteById(companyID);
     }
 
 }

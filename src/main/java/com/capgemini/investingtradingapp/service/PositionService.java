@@ -30,8 +30,8 @@ public class PositionService {
         positionRepository.save(position);
     }
 
-    public PositionDTO getByCompanyID(long id) {
-        return modelMapper.map(positionRepository.findPositionByCompanyID(id), PositionDTO.class);
+    public PositionDTO getByCompanyID(long positionID) {
+        return modelMapper.map(positionRepository.findPositionByCompanyID(positionID), PositionDTO.class);
     }
 
     public List<PositionDTO> getByOpenDateAfter(LocalDateTime openDate) {
@@ -46,8 +46,8 @@ public class PositionService {
         return mapAll(positionRepository.findAll());
     }
 
-    public void update(long id, PositionDTO positionDTO) {
-        Position position = positionRepository.findById(id).get();
+    public void update(long positionID, PositionDTO positionDTO) {
+        Position position = positionRepository.findById(positionID).get();
         Position position1 = modelMapper.map(positionDTO, Position.class);
 
         if (position1.getPositionStatus() == PositionStatus.CLOSED) {

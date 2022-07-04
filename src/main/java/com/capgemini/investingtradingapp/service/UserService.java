@@ -27,12 +27,12 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void delete(long id) {
-        userRepository.deleteById(id);
+    public void delete(long userID) {
+        userRepository.deleteById(userID);
     }
 
-    public void update(long id, UserDTO userDTO) throws IncorrectTeleNumbException, IncorrectEmailException {
-        User user = userRepository.findById(id).get();
+    public void update(long userID, UserDTO userDTO) throws IncorrectTeleNumbException, IncorrectEmailException {
+        User user = userRepository.findById(userID).get();
         User user1 = modelMapper.map(userDTO, User.class);
         if (user1.getFirstName() != null) {
             user.setFirstName(user1.getFirstName());
@@ -65,4 +65,5 @@ public class UserService {
     private List<UserDTO> mapAll(List<User> users) {
         return users.stream().map(user -> modelMapper.map(user, UserDTO.class)).toList();
     }
+
 }
