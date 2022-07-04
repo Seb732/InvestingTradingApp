@@ -7,7 +7,18 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -20,7 +31,11 @@ import java.time.LocalDateTime;
  * This class represents single stock in user's portfolio.
  */
 @Entity
-@Table(name = "positions")
+@Table(name = "positions", indexes = {
+        @Index(name = "company_id_index", columnList = "company_id"),
+        @Index(name = "ticker_index", columnList = "ticker"),
+        @Index(name = "open_date_index", columnList = "open_date")
+})
 public class Position {
     /**
      * ticker - current stock price, size - number of bought shares

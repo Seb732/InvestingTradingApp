@@ -5,9 +5,21 @@ import com.capgemini.investingtradingapp.exception.IncorrectEmailException;
 import com.capgemini.investingtradingapp.exception.IncorrectTeleNumbException;
 import com.capgemini.investingtradingapp.exception.InsufficientFoundsException;
 import com.capgemini.investingtradingapp.exception.InvalidAmountException;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Getter
 @Setter
@@ -20,7 +32,10 @@ import javax.persistence.*;
  * to transfer money from personal to investing account and vice-versa.
  */
 @Entity
-@Table(name = "users")
+@Table(name = "users", indexes = {
+        @Index(name = "first_name_last_name_index", columnList = "first_name, last_name"),
+        @Index(name = "tele_numb_email_index", columnList = "tele_numb, email")
+})
 public class User {
 
     @Id
