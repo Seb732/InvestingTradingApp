@@ -3,6 +3,7 @@ package com.capgemini.investingtradingapp.controller;
 
 import com.capgemini.investingtradingapp.dto.PositionDTO;
 import com.capgemini.investingtradingapp.exception.InsufficientFoundsException;
+import com.capgemini.investingtradingapp.exception.InvalidAmountException;
 import com.capgemini.investingtradingapp.exception.PositionNotFoundException;
 import com.capgemini.investingtradingapp.service.InvestingAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/investingAccount")
+@RequestMapping("/user/investingAccount")
 public class InvestingAccountController {
 
     @Autowired
@@ -24,13 +25,19 @@ public class InvestingAccountController {
 
     @PostMapping("/position")
     @ResponseStatus(HttpStatus.CREATED)
-    public void buyPostion(@RequestParam final long accountID, @RequestBody final PositionDTO positionDTO) throws InsufficientFoundsException {
-        investingAccountService.buyPosition(accountID, positionDTO);
+    public void buyPostion(@RequestParam final long investingAccountID, @RequestBody final PositionDTO positionDTO) throws InsufficientFoundsException {
+        investingAccountService.buyPosition(investingAccountID, positionDTO);
     }
 
     @PutMapping("/position")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void sellPosition(@RequestParam final long accountID, @RequestParam final long positionID) throws PositionNotFoundException {
-        investingAccountService.sellPosition(accountID, positionID);
+    public void sellPosition(@RequestParam final long investingAccountID, @RequestParam final long positionID) throws PositionNotFoundException {
+        investingAccountService.sellPosition(investingAccountID, positionID);
+    }
+
+    @PutMapping("/balance")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void transferOUT(@RequestParam final long investingAccountID, @RequestParam final double amount) throws InvalidAmountException, InsufficientFoundsException {
+        investingAccountService.transferOUT(investingAccountID, amount);
     }
 }

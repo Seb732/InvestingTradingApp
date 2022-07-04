@@ -5,6 +5,7 @@ import com.capgemini.investingtradingapp.entity.InvestingAccount;
 import com.capgemini.investingtradingapp.entity.Position;
 import com.capgemini.investingtradingapp.entity.PositionStatus;
 import com.capgemini.investingtradingapp.exception.InsufficientFoundsException;
+import com.capgemini.investingtradingapp.exception.InvalidAmountException;
 import com.capgemini.investingtradingapp.exception.PositionNotFoundException;
 import com.capgemini.investingtradingapp.repository.InvestingAccountRepository;
 import com.capgemini.investingtradingapp.repository.PositionRepository;
@@ -43,6 +44,13 @@ public class InvestingAccountService {
         positionRepository.save(position);
         investingAccountRepository.save(investingAccount);
     }
+
+    public void transferOUT(long investingAccountID, double amount) throws InvalidAmountException, InsufficientFoundsException {
+        InvestingAccount investingAccount = investingAccountRepository.findById(investingAccountID).get();
+        investingAccount.getUser().transferOut(amount);
+        investingAccountRepository.save(investingAccount);
+    }
+
 
     public List<InvestingAccount> getAll() {
         return investingAccountRepository.findAll();
