@@ -1,7 +1,6 @@
 package com.capgemini.investingtradingapp.controller;
 
 import com.capgemini.investingtradingapp.dto.PositionDTO;
-import com.capgemini.investingtradingapp.service.InvestingAccountService;
 import com.capgemini.investingtradingapp.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -26,11 +26,10 @@ public class PositionController {
 
     @Autowired
     PositionService positionService;
-    InvestingAccountService investingAccountService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@RequestBody final PositionDTO position, @RequestParam final long investingAccountID) {
+    public void save(@Valid @RequestBody final PositionDTO position, @RequestParam final long investingAccountID) {
         positionService.save(investingAccountID, position);
     }
 
@@ -51,7 +50,7 @@ public class PositionController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody final PositionDTO positionDTO, @RequestParam final long positionID) {
+    public void update(@Valid @RequestBody final PositionDTO positionDTO, @RequestParam final long positionID) {
         positionService.update(positionID, positionDTO);
     }
 

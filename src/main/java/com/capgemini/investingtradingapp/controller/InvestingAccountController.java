@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/user/investingAccount")
 public class InvestingAccountController {
@@ -25,7 +27,7 @@ public class InvestingAccountController {
 
     @PostMapping("/position")
     @ResponseStatus(HttpStatus.CREATED)
-    public void buyPostion(@RequestParam final long investingAccountID, @RequestBody final PositionDTO positionDTO) throws InsufficientFoundsException {
+    public void buyPostion(@RequestParam final long investingAccountID, @Valid @RequestBody final PositionDTO positionDTO) throws InsufficientFoundsException {
         investingAccountService.buyPosition(investingAccountID, positionDTO);
     }
 

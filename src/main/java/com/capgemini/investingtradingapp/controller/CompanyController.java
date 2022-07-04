@@ -51,13 +51,13 @@ public class CompanyController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestParam final long companyID, @RequestParam final CompanyDto companyDto) {
+    public void update(@RequestParam final long companyID, @RequestParam final CompanyDto companyDto) {
         companyService.update(companyID, companyDto);
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@Valid @RequestParam final long companyID) {
+    public void delete(@RequestParam final long companyID) {
         companyService.delete(companyID);
     }
 }

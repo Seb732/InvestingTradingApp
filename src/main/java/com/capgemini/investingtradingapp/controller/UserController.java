@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@RequestBody final UserDTO user) {
+    public void save(@Valid @RequestBody final UserDTO user) {
         userService.save(user);
     }
 
@@ -39,7 +40,7 @@ public class UserController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestParam final long userID, @RequestBody final UserDTO user) throws IncorrectEmailException, IncorrectTeleNumbException {
+    public void update(@RequestParam final long userID, @Valid @RequestBody final UserDTO user) throws IncorrectEmailException, IncorrectTeleNumbException {
         userService.update(userID, user);
     }
 
