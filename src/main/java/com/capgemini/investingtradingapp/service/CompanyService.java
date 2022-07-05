@@ -46,7 +46,7 @@ public class CompanyService {
         if (company1.getTickerSymbol() != null) {
             company.setTickerSymbol(company1.getTickerSymbol());
         }
-
+        companyRepository.save(company);
     }
 
     public void delete(long companyID) {
