@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,9 +50,9 @@ public class CompanyController {
         return companyService.getAll();
     }
 
-    @PutMapping
+    @PutMapping("/{companyID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestParam final long companyID, @RequestParam final CompanyDto companyDto) {
+    public void update(@PathVariable final long companyID, @RequestBody final CompanyDto companyDto) {
         companyService.update(companyID, companyDto);
     }
 
