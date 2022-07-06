@@ -5,9 +5,10 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 
 @Data
-public class UserDTO {
+public class UserDTO implements Serializable {
 
     @NotBlank(message = "First name is mandatory")
     private String firstName;
