@@ -7,6 +7,9 @@ import com.capgemini.investingtradingapp.exception.IncorrectTeleNumbException;
 import com.capgemini.investingtradingapp.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +23,7 @@ public class UserService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @CachePut(value = "users", keyGenerator = "customKeyGenerator")
     public void save(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
         user.getInvestingAccount().setUser(user);
@@ -27,10 +31,12 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @CacheEvict(value = "users", keyGenerator = "customKeyGenerator")
     public void delete(long userID) {
         userRepository.deleteById(userID);
     }
 
+    @CachePut(value = "users", keyGenerator = "customKeyGenerator")
     public void update(long userID, UserDTO userDTO) throws IncorrectTeleNumbException, IncorrectEmailException {
         User user = userRepository.findById(userID).get();
         User user1 = modelMapper.map(userDTO, User.class);
@@ -50,14 +56,17 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Cacheable(value = "users", keyGenerator = "customKeyGenerator")
     public List<UserDTO> getAll() {
         return mapAll(userRepository.findAll());
     }
 
+    @Cacheable(value = "users", keyGenerator = "customKeyGenerator")
     public List<UserDTO> findByFirstNameAndLastName(String firstName, String lastName) {
         return mapAll(userRepository.findUserByFirstNameAndLastName(firstName, lastName));
     }
 
+    @Cacheable(value = "users", keyGenerator = "customKeyGenerator")
     public List<UserDTO> findByTeleNumbAndEmail(String teleNumb, String email) {
         return mapAll(userRepository.findUserByTeleNumbAndEmail(teleNumb, email));
     }
