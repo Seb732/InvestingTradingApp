@@ -7,10 +7,11 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class PositionDTO {
+public class PositionDTO implements Serializable {
 
     @PositiveOrZero
     private long companyID;
