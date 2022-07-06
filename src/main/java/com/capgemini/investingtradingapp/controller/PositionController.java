@@ -37,7 +37,7 @@ public class PositionController {
     @GetMapping
     public List<PositionDTO> read(@RequestParam final Map<String, String> allParams) {
         if (allParams.containsKey("companyID")) {
-            return List.of(positionService.getByCompanyID(Long.parseLong(allParams.get("companyID"))));
+            return positionService.getByCompanyID(Long.parseLong(allParams.get("companyID")));
         }
         if (allParams.containsKey("openDate")) {
             return positionService.getByOpenDateAfter(LocalDateTime.parse(allParams.get("openDate"),
