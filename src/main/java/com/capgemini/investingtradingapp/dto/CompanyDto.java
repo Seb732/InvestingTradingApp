@@ -3,10 +3,9 @@ package com.capgemini.investingtradingapp.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 
 @Data
-public class CompanyDto implements Serializable {
+public class CompanyDto {
 
     @NotBlank(message = "Company name is mandatory")
     private String companyName;
