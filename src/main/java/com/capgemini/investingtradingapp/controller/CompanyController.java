@@ -40,11 +40,11 @@ public class CompanyController {
     public List<CompanyDto> read(@Valid @RequestParam final Map<String, String> allParams) {
 
         if (allParams.containsKey("companyName")) {
-            return List.of(companyService.getByCompanyName(allParams.get("companyName")));
+            return companyService.getByCompanyName(allParams.get("companyName"));
         }
 
         if (allParams.containsKey("tickerSymbol")) {
-            return List.of(companyService.getByTickerSymbol(allParams.get("tickerSymbol")));
+            return companyService.getByTickerSymbol(allParams.get("tickerSymbol"));
         }
 
         return companyService.getAll();

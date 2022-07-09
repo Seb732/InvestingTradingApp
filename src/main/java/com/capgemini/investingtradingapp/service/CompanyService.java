@@ -11,7 +11,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -29,17 +28,17 @@ public class CompanyService {
 
     @Cacheable(value = "companies", keyGenerator = "customKeyGenerator")
     public List<CompanyDto> getAll() {
-        return companyRepository.findAll().stream().map(company -> modelMapper.map(company, CompanyDto.class)).collect(Collectors.toList());
+        return mapAll(companyRepository.findAll());
     }
 
     @Cacheable(value = "companies", keyGenerator = "customKeyGenerator")
-    public CompanyDto getByCompanyName(String name) {
-        return modelMapper.map(companyRepository.findCompanyByCompanyName(name), CompanyDto.class);
+    public List<CompanyDto> getByCompanyName(String name) {
+        return mapAll(companyRepository.findCompanyByCompanyName(name));
     }
 
     @Cacheable(value = "companies", keyGenerator = "customKeyGenerator")
-    public CompanyDto getByTickerSymbol(String tickerSymbol) {
-        return modelMapper.map(companyRepository.findCompanyByTickerSymbol(tickerSymbol), CompanyDto.class);
+    public List<CompanyDto> getByTickerSymbol(String tickerSymbol) {
+        return mapAll(companyRepository.findCompanyByTickerSymbol(tickerSymbol));
     }
 
     @CachePut(value = "companies", keyGenerator = "customKeyGenerator")
@@ -62,4 +61,7 @@ public class CompanyService {
         companyRepository.deleteById(companyID);
     }
 
+    private List<CompanyDto> mapAll(List<Company> companies) {
+        return companies.stream().map(company -> modelMapper.map(company, CompanyDto.class)).toList();
+    }
 }
