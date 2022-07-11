@@ -1,6 +1,7 @@
 package com.capgemini.investingtradingapp.dto;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import javax.validation.constraints.Pattern;
  * Dto class for user
  */
 @Data
+@AllArgsConstructor
 public class UserDTO {
 
     @NotBlank(message = "First name is mandatory")
