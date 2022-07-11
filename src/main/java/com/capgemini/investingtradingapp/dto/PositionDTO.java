@@ -1,7 +1,9 @@
 package com.capgemini.investingtradingapp.dto;
 
 import com.capgemini.investingtradingapp.entity.PositionStatus;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.PastOrPresent;
@@ -13,6 +15,8 @@ import java.time.LocalDateTime;
  * Dto class for position
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PositionDTO {
 
     @PositiveOrZero(message = "Company's id has to be positive non-negative")

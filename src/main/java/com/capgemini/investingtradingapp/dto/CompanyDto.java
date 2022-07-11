@@ -1,6 +1,8 @@
 package com.capgemini.investingtradingapp.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
@@ -8,6 +10,8 @@ import javax.validation.constraints.NotBlank;
  * Dto class for company
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CompanyDto {
 
     @NotBlank(message = "Company name is mandatory")
