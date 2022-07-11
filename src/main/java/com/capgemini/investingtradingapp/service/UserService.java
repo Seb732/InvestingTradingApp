@@ -24,11 +24,11 @@ public class UserService {
     private ModelMapper modelMapper;
 
     @CachePut(value = "users", keyGenerator = "customKeyGenerator")
-    public void save(UserDTO userDTO) {
+    public User save(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
         user.getInvestingAccount().setUser(user);
         user.getPersonalAccount().setUser(user);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @CacheEvict(value = "users", keyGenerator = "customKeyGenerator")
@@ -37,7 +37,7 @@ public class UserService {
     }
 
     @CachePut(value = "users", keyGenerator = "customKeyGenerator")
-    public void update(long userID, UserDTO userDTO) throws IncorrectTeleNumbException, IncorrectEmailException {
+    public User update(long userID, UserDTO userDTO) throws IncorrectTeleNumbException, IncorrectEmailException {
         User user = userRepository.findById(userID).get();
         User user1 = modelMapper.map(userDTO, User.class);
         if (user1.getFirstName() != null) {
@@ -53,7 +53,7 @@ public class UserService {
             user.setEmail(user1.getEmail());
         }
 
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Cacheable(value = "users", keyGenerator = "customKeyGenerator")

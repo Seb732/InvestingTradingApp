@@ -28,10 +28,10 @@ public class PositionService {
     private ModelMapper modelMapper;
 
     @CachePut(value = "position", keyGenerator = "customKeyGenerator")
-    public void save(long investingAccountID, PositionDTO positionDTO) {
+    public Position save(long investingAccountID, PositionDTO positionDTO) {
         Position position = modelMapper.map(positionDTO, Position.class);
         position.setInvestingAccount(investingAccountRepository.findById(investingAccountID).get());
-        positionRepository.save(position);
+        return positionRepository.save(position);
     }
 
     @Cacheable(value = "position", keyGenerator = "customKeyGenerator")
@@ -55,7 +55,7 @@ public class PositionService {
     }
 
     @CachePut(value = "position", keyGenerator = "customKeyGenerator")
-    public void update(long positionID, PositionDTO positionDTO) {
+    public Position update(long positionID, PositionDTO positionDTO) {
         Position position = positionRepository.findById(positionID).get();
         Position position1 = modelMapper.map(positionDTO, Position.class);
 
@@ -67,6 +67,7 @@ public class PositionService {
         if (position1.getCloseDate() != null) {
             position.setCloseDate(position1.getCloseDate());
         }
+        return positionRepository.save(position);
     }
 
     @CacheEvict(value = "position", keyGenerator = "customKeyGenerator")
