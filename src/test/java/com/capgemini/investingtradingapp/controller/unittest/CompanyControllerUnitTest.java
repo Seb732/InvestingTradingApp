@@ -1,4 +1,4 @@
-package com.capgemini.investingtradingapp.controller;
+package com.capgemini.investingtradingapp.controller.unittest;
 
 import com.capgemini.investingtradingapp.dto.CompanyDto;
 import com.capgemini.investingtradingapp.entity.Company;
@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CompanyControllerTest {
+public class CompanyControllerUnitTest {
 
     @MockBean
     private CompanyService companyService;

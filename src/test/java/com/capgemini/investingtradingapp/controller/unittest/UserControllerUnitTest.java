@@ -1,4 +1,4 @@
-package com.capgemini.investingtradingapp.controller;
+package com.capgemini.investingtradingapp.controller.unittest;
 
 import com.capgemini.investingtradingapp.dto.UserDTO;
 import com.capgemini.investingtradingapp.entity.User;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class UserControllerUnitTest {
 
     @MockBean
     private UserService userService;
