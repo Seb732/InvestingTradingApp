@@ -41,7 +41,7 @@ public class CompanyControllerTest {
     private ModelMapper modelMapper;
 
     @Test
-    public void post_User_success() throws Exception {
+    public void post_Company_success() throws Exception {
         Company company = new Company();
         company.setCompanyName("Tesla Inc.");
         company.setTickerSymbol("TSLA");
@@ -78,7 +78,7 @@ public class CompanyControllerTest {
     }
 
     @Test
-    public void put_User_success() throws Exception {
+    public void put_Company_success() throws Exception {
         Company company = new Company();
         company.setCompanyName("Tesla Inc.");
         company.setTickerSymbol("TSLA");
@@ -91,7 +91,7 @@ public class CompanyControllerTest {
     }
 
     @Test
-    public void delete_User_success() throws Exception {
+    public void delete_Company_success() throws Exception {
         CompanyDto companyDto = new CompanyDto();
         companyDto.setCompanyName("Tesla Inc.");
         companyDto.setTickerSymbol("TSLA");
