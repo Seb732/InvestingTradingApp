@@ -59,7 +59,7 @@ public class User {
     private InvestingAccount investingAccount = new InvestingAccount();
 
     /**
-     * This metod enables user to transfer money to be invested using investing account.
+     * This method enables user to transfer money to be invested using investing account.
      *
      * @param amount - amount of money to be transferred
      */
