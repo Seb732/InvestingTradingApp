@@ -6,6 +6,9 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+/**
+ * Dto class for user
+ */
 @Data
 public class UserDTO {
 

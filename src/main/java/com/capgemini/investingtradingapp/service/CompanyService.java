@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+/**
+ * Company's class service
+ */
 @Service
 public class CompanyService {
     @Autowired
@@ -21,28 +23,50 @@ public class CompanyService {
     @Autowired
     private ModelMapper modelMapper;
 
+    /**
+     * This method saves given company record to database
+     *
+     * @param companyDto - company dto to be mapped to company class
+     */
     @CachePut(value = "companies", keyGenerator = "customKeyGenerator")
-    public void save(CompanyDto companyDto) {
-        companyRepository.save(modelMapper.map(companyDto, Company.class));
+    public Company save(CompanyDto companyDto) {
+        return companyRepository.save(modelMapper.map(companyDto, Company.class));
     }
 
+    /**
+     * This method finds the all companies records
+     *
+     * @return - list of all companies
+     */
     @Cacheable(value = "companies", keyGenerator = "customKeyGenerator")
     public List<CompanyDto> getAll() {
         return mapAll(companyRepository.findAll());
     }
 
+    /**
+     * This method finds company by name
+     *
+     * @param name
+     * @return - company
+     */
     @Cacheable(value = "companies", keyGenerator = "customKeyGenerator")
     public List<CompanyDto> getByCompanyName(String name) {
         return mapAll(companyRepository.findCompanyByCompanyName(name));
     }
 
+    /**
+     * This method finds company by ticker symbol
+     *
+     * @param tickerSymbol
+     * @return - company with given ticker symbol's dto
+     */
     @Cacheable(value = "companies", keyGenerator = "customKeyGenerator")
     public List<CompanyDto> getByTickerSymbol(String tickerSymbol) {
         return mapAll(companyRepository.findCompanyByTickerSymbol(tickerSymbol));
     }
 
     @CachePut(value = "companies", keyGenerator = "customKeyGenerator")
-    public void update(long companyID, CompanyDto companyDto) {
+    public Company update(long companyID, CompanyDto companyDto) {
         Company company = companyRepository.findById(companyID).get();
         Company company1 = modelMapper.map(companyDto, Company.class);
 
@@ -53,7 +77,8 @@ public class CompanyService {
         if (company1.getTickerSymbol() != null) {
             company.setTickerSymbol(company1.getTickerSymbol());
         }
-        companyRepository.save(company);
+
+        return companyRepository.save(company);
     }
 
     @CacheEvict(value = "companies", keyGenerator = "customKeyGenerator")

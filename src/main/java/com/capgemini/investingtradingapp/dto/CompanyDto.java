@@ -4,6 +4,9 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Dto class for company
+ */
 @Data
 public class CompanyDto {
 

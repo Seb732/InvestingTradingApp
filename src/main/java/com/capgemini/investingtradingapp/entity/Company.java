@@ -25,6 +25,9 @@ import javax.persistence.Table;
         @Index(name = "company_name_index", columnList = "company_name"),
         @Index(name = "ticker_symbol_index", columnList = "ticker_symbol")
 })
+/**
+ * This class represents a company which shares user buys.
+ */
 public class Company {
 
     @Id
@@ -32,6 +35,9 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long companyID;
 
+    /**
+     * Company's full name abbreviation eg. Apple Inc. - AAPL
+     */
     @Column(name = "ticker_symbol", nullable = false)
     private String tickerSymbol;
 

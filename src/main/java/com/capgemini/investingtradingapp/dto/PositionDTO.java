@@ -9,21 +9,24 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 
+/**
+ * Dto class for position
+ */
 @Data
 public class PositionDTO {
 
-    @PositiveOrZero
+    @PositiveOrZero(message = "Company's id has to be positive non-negative")
     private long companyID;
 
-    @Min(value = 1)
+    @Min(value = 1, message = "Position size has to be greater or equal to one")
     private int size;
 
-    @Positive
+    @Positive(message = "Ticker value has to be positive")
     private double ticker;
 
     private PositionStatus positionStatus;
 
-    @PastOrPresent
+    @PastOrPresent(message = "Open date has to be a past-time date")
     private LocalDateTime openDate;
 
     private LocalDateTime closeDate;

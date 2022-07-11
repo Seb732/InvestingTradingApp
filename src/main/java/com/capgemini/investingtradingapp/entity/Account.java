@@ -24,8 +24,6 @@ public abstract class Account {
     /**
      * the account balance field
      */
-
-
     @Column(name = "balance")
     protected double balance;
 
