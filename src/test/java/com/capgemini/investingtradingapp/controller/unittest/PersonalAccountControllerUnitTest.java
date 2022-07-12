@@ -1,11 +1,8 @@
 package com.capgemini.investingtradingapp.controller.unittest;
 
-import com.capgemini.investingtradingapp.repository.PersonalAccountRepository;
 import com.capgemini.investingtradingapp.service.PersonalAccountService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,12 +23,6 @@ public class PersonalAccountControllerUnitTest {
     private PersonalAccountService personalAccountService;
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
-    private ModelMapper modelMapper;
-    @Autowired
-    private PersonalAccountRepository personalAccountRepository;
 
     @BeforeAll
     private static void setUp() {
