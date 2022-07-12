@@ -2,6 +2,8 @@ package com.capgemini.investingtradingapp.entity;
 
 import com.capgemini.investingtradingapp.exception.InsufficientFoundsException;
 import com.capgemini.investingtradingapp.exception.PositionNotFoundException;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,7 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,9 +36,11 @@ public class InvestingAccount extends Account {
     @Column(name = "investing_account_id")
     private long investingAccountID;
 
-    @OneToMany(mappedBy = "investingAccount", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "investingAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Position> portfolio = new ArrayList<>();
 
+    @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private User user;

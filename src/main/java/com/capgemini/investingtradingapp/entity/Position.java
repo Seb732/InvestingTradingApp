@@ -1,6 +1,7 @@
 package com.capgemini.investingtradingapp.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -65,7 +67,8 @@ public class Position {
     @Column(name = "close_date")
     private LocalDateTime closeDate;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "investing_account_id", referencedColumnName = "investing_account_id", nullable = false)
     private InvestingAccount investingAccount;
 

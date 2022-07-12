@@ -5,6 +5,7 @@ import com.capgemini.investingtradingapp.exception.IncorrectEmailException;
 import com.capgemini.investingtradingapp.exception.IncorrectTeleNumbException;
 import com.capgemini.investingtradingapp.exception.InsufficientFoundsException;
 import com.capgemini.investingtradingapp.exception.InvalidAmountException;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,9 +53,11 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private PersonalAccount personalAccount = new PersonalAccount();
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private InvestingAccount investingAccount = new InvestingAccount();
 
