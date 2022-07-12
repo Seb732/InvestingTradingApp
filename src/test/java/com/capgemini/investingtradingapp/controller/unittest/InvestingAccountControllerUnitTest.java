@@ -3,7 +3,6 @@ package com.capgemini.investingtradingapp.controller.unittest;
 import com.capgemini.investingtradingapp.dto.PositionDTO;
 import com.capgemini.investingtradingapp.entity.Position;
 import com.capgemini.investingtradingapp.entity.PositionStatus;
-import com.capgemini.investingtradingapp.repository.PositionRepository;
 import com.capgemini.investingtradingapp.service.InvestingAccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
@@ -29,8 +28,6 @@ public class InvestingAccountControllerUnitTest {
     static long investingAccountID;
     @MockBean
     private InvestingAccountService investingAccountService;
-    @Autowired
-    private PositionRepository positionRepository;
     @Autowired
     private MockMvc mockMvc;
     @Autowired
