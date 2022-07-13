@@ -1,4 +1,4 @@
-package com.capgemini.investingtradingapp;
+package com.capgemini.investingtradingapp.config;
 
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.util.StringUtils;

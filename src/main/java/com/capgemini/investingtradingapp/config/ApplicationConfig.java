@@ -1,4 +1,4 @@
-package com.capgemini.investingtradingapp;
+package com.capgemini.investingtradingapp.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.CachingConfigurerSupport;

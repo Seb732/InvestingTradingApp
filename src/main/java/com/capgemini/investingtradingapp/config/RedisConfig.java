@@ -1,4 +1,4 @@
-package com.capgemini.investingtradingapp;
+package com.capgemini.investingtradingapp.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
