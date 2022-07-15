@@ -8,6 +8,13 @@
         <version>2.7.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <modules>
+        <module>InvestingTradingApp-user</module>
+        <module>InvestingTradingApp-user-client</module>
+        <module>InvestingTradingApp-position</module>
+        <module>InvestingTradingApp-position-client</module>
+    </modules>
+    <packaging>pom</packaging>
     <groupId>com.capgemini</groupId>
     <artifactId>InvestingTradingApp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
