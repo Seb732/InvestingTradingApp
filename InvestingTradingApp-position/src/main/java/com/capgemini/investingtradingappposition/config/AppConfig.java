@@ -7,15 +7,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ApplicationConfig extends CachingConfigurerSupport {
-
-    @Bean
+public class AppConfig extends CachingConfigurerSupport {
+    @Bean("modelMapper2")
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
 
-
-    @Bean("customKeyGenerator")
+    @Bean("customKeyGen")
     public KeyGenerator keyGenerator() {
         return new CustomKeyGenerator();
     }

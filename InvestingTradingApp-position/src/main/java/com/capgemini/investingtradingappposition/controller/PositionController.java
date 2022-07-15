@@ -1,7 +1,5 @@
 package com.capgemini.investingtradingappposition.controller;
 
-import com.capgemini.investingtradingappposition.exception.InsufficientFoundsException;
-import com.capgemini.investingtradingappposition.exception.PositionNotFoundException;
 import com.capgemini.investingtradingappposition.service.PositionService;
 import com.capgemini.investingtradingapppositionclient.dto.PositionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +28,10 @@ public class PositionController {
     @Autowired
     private PositionService positionService;
 
-
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void save(@Valid @RequestBody final PositionDTO position, @RequestParam final long investingAccountID) {
-//        positionService.save(investingAccountID, position);
-//    }
-    @PostMapping("/position")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void buyPosition(@PathVariable final long investingAccountID, @Valid @RequestBody final PositionDTO positionDTO) throws InsufficientFoundsException {
-        positionService.buyPosition(investingAccountID, positionDTO);
+    public void save(@Valid @RequestBody final PositionDTO position) {
+        positionService.save(position);
     }
 
     @GetMapping
@@ -57,15 +49,10 @@ public class PositionController {
         return positionService.getAll();
     }
 
-//    @PutMapping("/{positionID}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void update(@Valid @RequestBody final PositionDTO positionDTO, @PathVariable final long positionID) {
-//        positionService.update(positionID, positionDTO);
-//    }
-    @PutMapping("/position/{positionID}")
+    @PutMapping("/{positionID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void sellPosition(@PathVariable final long investingAccountID, @PathVariable final long positionID) throws PositionNotFoundException, PositionNotFoundException {
-        positionService.sellPosition(investingAccountID, positionID);
+    public void update(@Valid @RequestBody final PositionDTO positionDTO, @PathVariable final long positionID) {
+        positionService.update(positionID, positionDTO);
     }
 
     @DeleteMapping

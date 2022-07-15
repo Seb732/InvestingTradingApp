@@ -1,24 +1,16 @@
 package repository;
 
 import com.capgemini.investingtradingappposition.entity.Position;
-import com.capgemini.investingtradingappposition.repository.PositionRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @DataJpaTest
+
 public class PositionRepositoryTest {
 
     Position position;
 
-    @Autowired
-    PositionRepository positionRepository;
+//    @Autowired
+//    PositionRepository positionRepository;
 
 //    @BeforeEach
 //    void init() throws IncorrectTeleNumbException, IncorrectEmailException {
@@ -44,25 +36,25 @@ public class PositionRepositoryTest {
 //        positionRepository.save(position);
 //    }
 
-    @Test
-    void findPositionByCompanyIdSuccess() {
-        List<Position> positions = positionRepository.findPositionByCompanyID(1);
-        assertEquals(1, positions.size());
-        Assertions.assertEquals(position.getPositionID(), positions.get(0).getPositionID());
-    }
-
-    @Test
-    void findPositionByOpenDateAfterSuccess() {
-        List<Position> positions = positionRepository.findPositionByOpenDateAfter(LocalDateTime.of(2000,1,1,1,1));
-        assertEquals(1, positions.size());
-        Assertions.assertEquals(position.getPositionID(), positions.get(0).getPositionID());
-    }
-
-    @Test
-    void findPositionByTickerGreaterThan() {
-        List<Position> positions = positionRepository.findPositionByTickerGreaterThan(0);
-        assertEquals(1, positions.size());
-        Assertions.assertEquals(position.getPositionID(), positions.get(0).getPositionID());
-    }
+//    @Test
+//    void findPositionByCompanyIdSuccess() {
+//        List<Position> positions = positionRepository.findPositionByCompanyID(1);
+//        assertEquals(1, positions.size());
+//        Assertions.assertEquals(position.getPositionID(), positions.get(0).getPositionID());
+//    }
+//
+//    @Test
+//    void findPositionByOpenDateAfterSuccess() {
+//        List<Position> positions = positionRepository.findPositionByOpenDateAfter(LocalDateTime.of(2000, 1, 1, 1, 1));
+//        assertEquals(1, positions.size());
+//        Assertions.assertEquals(position.getPositionID(), positions.get(0).getPositionID());
+//    }
+//
+//    @Test
+//    void findPositionByTickerGreaterThan() {
+//        List<Position> positions = positionRepository.findPositionByTickerGreaterThan(0);
+//        assertEquals(1, positions.size());
+//        Assertions.assertEquals(position.getPositionID(), positions.get(0).getPositionID());
+//    }
 
 }

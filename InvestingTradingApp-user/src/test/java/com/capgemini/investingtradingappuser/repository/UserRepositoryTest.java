@@ -39,16 +39,16 @@ public class UserRepositoryTest {
     }
 
     @Test
-    void findUserByFirstNameAndLastNameSuccess(){
+    void findUserByFirstNameAndLastNameSuccess() {
         List<User> users = userRepository.findUserByFirstNameAndLastName("testName", "testLastName");
-        assertEquals(1,users.size());
-        assertEquals(user.getUserID(),users.get(0).getUserID());
+        assertEquals(1, users.size());
+        assertEquals(user.getUserID(), users.get(0).getUserID());
     }
 
     @Test
-    void findUserByTeleNumbAndEmail(){
+    void findUserByTeleNumbAndEmail() {
         List<User> users = userRepository.findUserByTeleNumbAndEmail("111-222-333", "test@gmail.com");
-        assertEquals(1,users.size());
-        assertEquals(user.getUserID(),users.get(0).getUserID());
+        assertEquals(1, users.size());
+        assertEquals(user.getUserID(), users.get(0).getUserID());
     }
 }

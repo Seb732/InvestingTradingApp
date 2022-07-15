@@ -31,7 +31,7 @@ public class InvestingAccountRepositoryTest {
         investingAccount.setBalance(100);
         investingAccountRepository.save(investingAccount);
 
-     //   InvestingAccount testedInvestingAccount = investingAccountRepository.findInvestingAccountByUser(user);
+        //   InvestingAccount testedInvestingAccount = investingAccountRepository.findInvestingAccountByUser(user);
 //        assertEquals(investingAccount.getInvestingAccountID(), testedInvestingAccount.getInvestingAccountID());
 //        assertEquals(investingAccount.getBalance(), testedInvestingAccount.getBalance());
 //        assertEquals(user, testedInvestingAccount.getUser());

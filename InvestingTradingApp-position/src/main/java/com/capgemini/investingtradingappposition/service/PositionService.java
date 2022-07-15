@@ -3,7 +3,6 @@ package com.capgemini.investingtradingappposition.service;
 
 import com.capgemini.investingtradingappposition.entity.Position;
 import com.capgemini.investingtradingappposition.entity.PositionStatus;
-import com.capgemini.investingtradingappposition.exception.PositionNotFoundException;
 import com.capgemini.investingtradingappposition.repository.PositionRepository;
 import com.capgemini.investingtradingapppositionclient.dto.PositionDTO;
 import org.modelmapper.ModelMapper;
@@ -11,62 +10,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@ComponentScan(basePackages = "com.capgemini.investingtradingappuser")
+
 public class PositionService {
 
     @Autowired
     private PositionRepository positionRepository;
 
-//    @Autowired
-//    private InvestingAccountRepository investingAccountRepository;
     @Autowired
     private ModelMapper modelMapper;
 
-    @CachePut(value = "position", keyGenerator = "customKeyGenerator")
-    public Position save(long investingAccountID, @Valid PositionDTO positionDTO) {
+    @CachePut(value = "position", keyGenerator = "customKeyGen")
+    public Position save(PositionDTO positionDTO) {
         Position position = modelMapper.map(positionDTO, Position.class);
-        //position.setInvestingAccount(investingAccountRepository.findById(investingAccountID).get());
         return positionRepository.save(position);
     }
-    @CachePut(value = "position", keyGenerator = "customKeyGenerator")
-    public Position buyPosition(long investingAccountID, PositionDTO positionDTO) {
-        Position position = modelMapper.map(positionDTO, Position.class);
-        //InvestingAccount investingAccount = investingAccountRepository.findById(investingAccountID).get();
-        //investingAccount.buy(position.getCompanyID(), position.getSize(), position.getTicker(), investingAccount);
 
-        //investingAccountRepository.save(investingAccount);
-        return position;
-    }
-
-    @Cacheable(value = "position", keyGenerator = "customKeyGenerator")
+    @Cacheable(value = "position", keyGenerator = "customKeyGen")
     public List<PositionDTO> getByCompanyID(long companyID) {
         return mapAll(positionRepository.findPositionByCompanyID(companyID));
     }
 
-    @Cacheable(value = "position", keyGenerator = "customKeyGenerator")
+    @Cacheable(value = "position", keyGenerator = "customKeyGen")
     public List<PositionDTO> getByOpenDateAfter(LocalDateTime openDate) {
         return mapAll(positionRepository.findPositionByOpenDateAfter(openDate));
     }
 
-    @Cacheable(value = "position", keyGenerator = "customKeyGenerator")
+    @Cacheable(value = "position", keyGenerator = "customKeyGen")
     public List<PositionDTO> getPositionByTickerGreaterThan(double ticker) {
         return mapAll(positionRepository.findPositionByTickerGreaterThan(ticker));
     }
 
-    @Cacheable(value = "position", keyGenerator = "customKeyGenerator")
+    @Cacheable(value = "position", keyGenerator = "customKeyGen")
     public List<PositionDTO> getAll() {
         return mapAll(positionRepository.findAll());
     }
 
-    @CachePut(value = "position", keyGenerator = "customKeyGenerator")
+    @CachePut(value = "position", keyGenerator = "customKeyGen")
     public Position update(long positionID, PositionDTO positionDTO) {
         Position position = positionRepository.findById(positionID).get();
         Position position1 = modelMapper.map(positionDTO, Position.class);
@@ -82,18 +67,7 @@ public class PositionService {
         return positionRepository.save(position);
     }
 
-    @CachePut(value = "position", keyGenerator = "customKeyGenerator")
-    public void sellPosition(long investingAccountID, long positionID) throws PositionNotFoundException {
-      //  InvestingAccount investingAccount = investingAccountRepository.findById(investingAccountID).get();
-        //investingAccount.sell(positionRepository.findById(positionID).get());
-        Position position = positionRepository.findById(positionID).get();
-        position.setPositionStatus(PositionStatus.CLOSED);
-        position.setCloseDate(LocalDateTime.now());
-        //investingAccountRepository.save(investingAccount);
-        positionRepository.save(position);
-    }
-
-    @CacheEvict(value = "position", keyGenerator = "customKeyGenerator")
+    @CacheEvict(value = "position", keyGenerator = "customKeyGen")
     public void delete(long positionID) {
         positionRepository.deleteById(positionID);
     }

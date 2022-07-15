@@ -32,10 +32,10 @@ public abstract class Account {
      * @param amount - amount of money to be deposited
      */
     public void deposit(double amount) throws InvalidAmountException {
-        if (amount > 1){
+        if (amount > 1) {
             this.balance += amount;
         }
-        else{
+        else {
             throw new InvalidAmountException("Amount deposited has to be bigger than 1");
         }
     }
@@ -46,14 +46,16 @@ public abstract class Account {
      * @throws InsufficientFoundsException - if the amount is overdrawn, then method throws exception
      */
     public void withdraw(double amount) throws InsufficientFoundsException, InvalidAmountException {
-        if (amount <= this.balance && amount >= 0){
+        if (amount <= this.balance && amount >= 0) {
             this.balance -= amount;
         }
-        else if(amount < 0) {
-            throw new InvalidAmountException("Amount has to be bigger than 0");
-        }
         else {
-            throw new InsufficientFoundsException("Not enough balance");
+            if (amount < 0) {
+                throw new InvalidAmountException("Amount has to be bigger than 0");
+            }
+            else {
+                throw new InsufficientFoundsException("Not enough balance");
+            }
         }
     }
 }

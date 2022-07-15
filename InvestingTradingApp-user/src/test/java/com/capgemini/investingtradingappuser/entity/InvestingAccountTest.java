@@ -12,12 +12,12 @@ class InvestingAccountTest {
     InvestingAccount investingAccount;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         investingAccount = new InvestingAccount();
     }
 
     @Test
-    void is_starting_deposit_equal_to_zero(){
+    void is_starting_deposit_equal_to_zero() {
         assertEquals(0, investingAccount.getBalance());
     }
 
@@ -25,11 +25,11 @@ class InvestingAccountTest {
     @Test
     void deposit_increases_balance_correctly() throws InvalidAmountException {
         investingAccount.deposit(10);
-        assertEquals(10,investingAccount.getBalance());
+        assertEquals(10, investingAccount.getBalance());
     }
 
     @Test
-    void deposit_throws_invalid_amount_exception(){
+    void deposit_throws_invalid_amount_exception() {
         assertThrows(InvalidAmountException.class, () -> {
             investingAccount.deposit(0.5);
         });
@@ -39,18 +39,18 @@ class InvestingAccountTest {
     void withdraw_decreases_balance_correctly() throws InsufficientFoundsException, InvalidAmountException, com.capgemini.investingtradingappuser.exception.InsufficientFoundsException {
         investingAccount.deposit(10);
         investingAccount.withdraw(5);
-        assertEquals(5,investingAccount.getBalance());
+        assertEquals(5, investingAccount.getBalance());
     }
 
     @Test
-    void withdraw_throws_insufficient_founds_exception(){
+    void withdraw_throws_insufficient_founds_exception() {
         assertThrows(InsufficientFoundsException.class, () -> {
             investingAccount.withdraw(10);
         });
     }
 
     @Test
-    void withdraw_throws_invalid_amount_exception(){
+    void withdraw_throws_invalid_amount_exception() {
         assertThrows(InvalidAmountException.class, () -> {
             investingAccount.withdraw(-15);
         });
@@ -112,9 +112,6 @@ class InvestingAccountTest {
 //        investingAccount.sell(investingAccount.getPortfolio().get(0));
 //        assertEquals(0,investingAccount.getPortfolio().size());
 //    }
-
-
-
 
 
 }

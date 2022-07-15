@@ -62,10 +62,8 @@ public class Position {
     @Column(name = "close_date")
     private LocalDateTime closeDate;
 
-//    @JsonBackReference
-//    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "investing_account_id", referencedColumnName = "investing_account_id", nullable = false)
-//    private InvestingAccount investingAccount;
+    @Column(name = "investing_account_id")
+    private long investingAccountID;
 
 
 }

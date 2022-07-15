@@ -4,7 +4,6 @@ import com.capgemini.investingtradingappposition.entity.Position;
 import com.capgemini.investingtradingappposition.exception.InsufficientFoundsException;
 import com.capgemini.investingtradingappuser.exception.PositionNotFoundException;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,14 +12,13 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +35,7 @@ public class InvestingAccount extends Account {
     @Column(name = "investing_account_id")
     private long investingAccountID;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "investingAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Transient
     private List<Position> portfolio = new ArrayList<>();
 
     @JsonBackReference
@@ -58,7 +55,7 @@ public class InvestingAccount extends Account {
      * @param ticker    - unitary price
      * @throws InsufficientFoundsException - exception is thrown when overdraft
      */
-    public void buy(long companyID, int size, double ticker) throws InsufficientFoundsException {
+    public void buy(long companyID, int size, double ticker, long investingAccountID) throws InsufficientFoundsException {
         if (this.balance < (double) size * ticker) {
             throw new InsufficientFoundsException();
         }
@@ -67,7 +64,7 @@ public class InvestingAccount extends Account {
         position.setCompanyID(companyID);
         position.setSize(size);
         position.setTicker(ticker);
-//        position.setInvestingAccount(investingAccount);
+        position.setInvestingAccountID(investingAccountID);
         portfolio.add(position);
     }
 

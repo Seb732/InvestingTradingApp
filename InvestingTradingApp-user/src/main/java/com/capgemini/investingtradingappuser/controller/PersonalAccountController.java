@@ -24,7 +24,7 @@ public class PersonalAccountController {
 
     @PutMapping("/balance")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void depositOrWithdraw(@RequestParam final String operationType, @PathVariable final long personalAccountID, @RequestParam final double amount) throws InvalidAmountException, InsufficientFoundsException {
+    public void depositOrWithdraw(@RequestParam final String operationType, @PathVariable final long personalAccountID, @RequestParam final double amount) throws InvalidAmountException, InsufficientFoundsException, com.capgemini.investingtradingappposition.exception.InsufficientFoundsException {
 
         if (Objects.equals(operationType, "deposit")) {
             personalAccountService.deposit(personalAccountID, amount);

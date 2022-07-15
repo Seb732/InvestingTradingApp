@@ -20,25 +20,25 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/user/investingAccount/{investingAccountID}")
+@RequestMapping("/user/investingAccount")
 public class InvestingAccountController {
 
     @Autowired
     InvestingAccountService investingAccountService;
 
-//    @PostMapping("/position")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void buyPosition(@PathVariable final long investingAccountID, @Valid @RequestBody final PositionDTO positionDTO) throws InsufficientFoundsException {
-//        investingAccountService.buyPosition(investingAccountID, positionDTO);
-//    }
+    @PostMapping("/position")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void buyPosition(@Valid @RequestBody final PositionDTO positionDTO) throws com.capgemini.investingtradingappposition.exception.InsufficientFoundsException {
+        investingAccountService.buyPosition(positionDTO);
+    }
 
-//    @PutMapping("/position/{positionID}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void sellPosition(@PathVariable final long investingAccountID, @PathVariable final long positionID) throws PositionNotFoundException {
-//        investingAccountService.sellPosition(investingAccountID, positionID);
-//    }
+    @PutMapping("/position/{positionID}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void sellPosition(@PathVariable final long positionID) throws PositionNotFoundException {
+        investingAccountService.sellPosition(positionID);
+    }
 
-    @PutMapping("/balance")
+    @PutMapping("/{investingAccountID}/balance")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void transferOUT(@PathVariable final long investingAccountID, @RequestParam final double amount) throws InvalidAmountException, InsufficientFoundsException {
         investingAccountService.transferOUT(investingAccountID, amount);

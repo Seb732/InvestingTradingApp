@@ -18,7 +18,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PositionDTO {
 
-    @PositiveOrZero(message = "Company's id has to be positive non-negative")
+    @PositiveOrZero(message = "Investing account id has to be non-negative")
+    private long investingAccountID;
+
+    @PositiveOrZero(message = "Company's id has to be non-negative")
     private long companyID;
 
     @Min(value = 1, message = "Position size has to be greater or equal to one")
