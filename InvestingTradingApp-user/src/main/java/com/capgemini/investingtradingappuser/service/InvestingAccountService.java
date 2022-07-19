@@ -8,9 +8,12 @@ import com.capgemini.investingtradingappuser.entity.InvestingAccount;
 import com.capgemini.investingtradingappuser.exception.InsufficientFoundsException;
 import com.capgemini.investingtradingappuser.exception.InvalidAmountException;
 import com.capgemini.investingtradingappuser.repository.InvestingAccountRepository;
+import com.capgemini.investingtradingappuserclient.event.PositionBoughtEvent;
+import com.capgemini.investingtradingappuserclient.event.PositionSoldEvent;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,10 +31,15 @@ public class InvestingAccountService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
+
     public Position buyPosition(PositionDTO positionDTO) throws com.capgemini.investingtradingappposition.exception.InsufficientFoundsException {
         Position position = modelMapper.map(positionDTO, Position.class);
         InvestingAccount investingAccount = investingAccountRepository.findById(position.getInvestingAccountID()).get();
         investingAccount.buy(position.getCompanyID(), position.getSize(), position.getTicker(), positionDTO.getInvestingAccountID());
+        kafkaTemplate.send("position-buy", String.valueOf(investingAccount.getInvestingAccountID()),
+                new PositionBoughtEvent(investingAccount.getInvestingAccountID(), position.getCompanyID(), position.getSize(), position.getTicker()));
         investingAccountRepository.save(investingAccount);
         return position;
     }
@@ -42,6 +50,8 @@ public class InvestingAccountService {
         investingAccount.sell(positionRepository.findById(positionID).get());
         position.setPositionStatus(PositionStatus.CLOSED);
         position.setCloseDate(LocalDateTime.now());
+        kafkaTemplate.send("position-sell", String.valueOf(investingAccount.getInvestingAccountID()),
+                new PositionSoldEvent(positionID, investingAccount.getInvestingAccountID(), position.getCompanyID(), position.getSize(), position.getTicker()));
         investingAccountRepository.save(investingAccount);
         positionRepository.save(position);
     }

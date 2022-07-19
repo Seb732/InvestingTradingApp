@@ -4,12 +4,15 @@ import com.capgemini.investingtradingappuser.entity.User;
 import com.capgemini.investingtradingappuser.exception.IncorrectEmailException;
 import com.capgemini.investingtradingappuser.exception.IncorrectTeleNumbException;
 import com.capgemini.investingtradingappuser.repository.UserRepository;
-import com.capgemini.investingtradingappuserclient.dto.dto.UserDTO;
+import com.capgemini.investingtradingappuserclient.dto.UserDTO;
+import com.capgemini.investingtradingappuserclient.event.UserDeletedEvent;
+import com.capgemini.investingtradingappuserclient.event.UserRegisteredEvent;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,18 +25,26 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
 
     @CachePut(value = "users", keyGenerator = "customKeyGenerator")
     public User save(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
         user.getInvestingAccount().setUser(user);
         user.getPersonalAccount().setUser(user);
+        kafkaTemplate.send("user-create", user.getEmail(),
+                new UserRegisteredEvent(user.getFirstName(), user.getLastName(), user.getEmail(), user.getTeleNumb()));
         return userRepository.save(user);
     }
 
     @CacheEvict(value = "users", keyGenerator = "customKeyGenerator")
     public void delete(long userID) {
-        userRepository.deleteById(userID);
+        User user = userRepository.findById(userID).get();
+        user.setActivityStatus(false);
+        kafkaTemplate.send("user-delete", user.getEmail(),
+                new UserDeletedEvent(user.getFirstName(), user.getLastName(), user.getEmail(), user.getTeleNumb()));
+        userRepository.save(user);
     }
 
     @CachePut(value = "users", keyGenerator = "customKeyGenerator")
