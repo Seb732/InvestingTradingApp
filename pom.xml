@@ -13,6 +13,7 @@
         <module>InvestingTradingApp-user-client</module>
         <module>InvestingTradingApp-position</module>
         <module>InvestingTradingApp-position-client</module>
+        <module>InvestingTradingApp-notification</module>
     </modules>
     <packaging>pom</packaging>
     <groupId>com.capgemini</groupId>
