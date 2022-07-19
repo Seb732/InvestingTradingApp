@@ -2,7 +2,7 @@ package com.capgemini.investingtradingappuser.controller.unittest;
 
 import com.capgemini.investingtradingappuser.entity.User;
 import com.capgemini.investingtradingappuser.service.UserService;
-import com.capgemini.investingtradingappuserclient.dto.dto.UserDTO;
+import com.capgemini.investingtradingappuserclient.dto.UserDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;

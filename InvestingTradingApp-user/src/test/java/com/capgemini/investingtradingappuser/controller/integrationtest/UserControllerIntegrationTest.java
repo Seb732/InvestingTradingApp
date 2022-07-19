@@ -3,7 +3,7 @@ package com.capgemini.investingtradingappuser.controller.integrationtest;
 import com.capgemini.investingtradingappuser.entity.User;
 import com.capgemini.investingtradingappuser.repository.UserRepository;
 import com.capgemini.investingtradingappuser.service.UserService;
-import com.capgemini.investingtradingappuserclient.dto.dto.UserDTO;
+import com.capgemini.investingtradingappuserclient.dto.UserDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

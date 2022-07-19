@@ -3,7 +3,7 @@ package com.capgemini.investingtradingappuser.controller;
 import com.capgemini.investingtradingappuser.exception.IncorrectEmailException;
 import com.capgemini.investingtradingappuser.exception.IncorrectTeleNumbException;
 import com.capgemini.investingtradingappuser.service.UserService;
-import com.capgemini.investingtradingappuserclient.dto.dto.UserDTO;
+import com.capgemini.investingtradingappuserclient.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;

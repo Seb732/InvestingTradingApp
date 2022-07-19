@@ -1,4 +1,4 @@
-package com.capgemini.investingtradingappuserclient.dto.dto;
+package com.capgemini.investingtradingappuserclient.dto;
 
 
 import lombok.AllArgsConstructor;
