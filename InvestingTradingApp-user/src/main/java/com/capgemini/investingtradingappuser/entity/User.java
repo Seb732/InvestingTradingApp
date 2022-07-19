@@ -53,6 +53,9 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "activity_status")
+    private boolean activityStatus = true;
+
     @JsonManagedReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private PersonalAccount personalAccount = new PersonalAccount();
