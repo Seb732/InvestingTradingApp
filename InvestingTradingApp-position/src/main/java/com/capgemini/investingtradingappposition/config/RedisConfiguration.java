@@ -1,4 +1,4 @@
-package com.capgemini.investingtradingappuser.config;
+package com.capgemini.investingtradingappposition.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +14,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 @Configuration
 
-public class RedisConfig {
+public class RedisConfiguration {
 
     @Bean
     public RedisCacheConfiguration cacheConfiguration() {

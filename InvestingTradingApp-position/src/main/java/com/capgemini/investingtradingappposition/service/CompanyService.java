@@ -16,6 +16,7 @@ import java.util.List;
  * Company's class service
  */
 @Service
+
 public class CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
@@ -28,7 +29,7 @@ public class CompanyService {
      *
      * @param companyDto - company dto to be mapped to company class
      */
-    @CachePut(value = "companies", keyGenerator = "customKeyGen")
+    @CachePut(value = "companies", keyGenerator = "customKeyGenerator")
     public Company save(CompanyDto companyDto) {
         return companyRepository.save(modelMapper.map(companyDto, Company.class));
     }
@@ -38,7 +39,7 @@ public class CompanyService {
      *
      * @return - list of all companies
      */
-    @Cacheable(value = "companies", keyGenerator = "customKeyGen")
+    @Cacheable(value = "companies", keyGenerator = "customKeyGenerator")
     public List<CompanyDto> getAll() {
         return mapAll(companyRepository.findAll());
     }
@@ -49,7 +50,7 @@ public class CompanyService {
      * @param name
      * @return - company
      */
-    @Cacheable(value = "companies", keyGenerator = "customKeyGen")
+    @Cacheable(value = "companies", keyGenerator = "customKeyGenerator")
     public List<CompanyDto> getByCompanyName(String name) {
         return mapAll(companyRepository.findCompanyByCompanyName(name));
     }
@@ -60,12 +61,12 @@ public class CompanyService {
      * @param tickerSymbol
      * @return - company with given ticker symbol's dto
      */
-    @Cacheable(value = "companies", keyGenerator = "customKeyGen")
+    @Cacheable(value = "companies", keyGenerator = "customKeyGenerator")
     public List<CompanyDto> getByTickerSymbol(String tickerSymbol) {
         return mapAll(companyRepository.findCompanyByTickerSymbol(tickerSymbol));
     }
 
-    @CachePut(value = "companies", keyGenerator = "customKeyGen")
+    @CachePut(value = "companies", keyGenerator = "customKeyGenerator")
     public Company update(long companyID, CompanyDto companyDto) {
         Company company = companyRepository.findById(companyID).get();
         Company company1 = modelMapper.map(companyDto, Company.class);
@@ -81,7 +82,7 @@ public class CompanyService {
         return companyRepository.save(company);
     }
 
-    @CacheEvict(value = "companies", keyGenerator = "customKeyGen")
+    @CacheEvict(value = "companies", keyGenerator = "customKeyGenerator")
     public void delete(long companyID) {
         companyRepository.deleteById(companyID);
     }
