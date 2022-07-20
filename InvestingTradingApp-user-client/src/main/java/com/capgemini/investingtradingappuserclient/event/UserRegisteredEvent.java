@@ -13,8 +13,11 @@ import lombok.Setter;
 public class UserRegisteredEvent {
 
     private String firstName;
+
     private String lastName;
+
     private String email;
+
     private String teleNumb;
 
 }

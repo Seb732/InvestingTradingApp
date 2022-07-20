@@ -13,8 +13,12 @@ import lombok.Setter;
 public class PositionSoldEvent {
 
     private long positionID;
+
     private long investingAccountID;
+
     private long companyID;
+
     private int size;
+
     private double ticker;
 }
