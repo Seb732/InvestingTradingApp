@@ -66,6 +66,11 @@ public class CompanyService {
         return mapAll(companyRepository.findCompanyByTickerSymbol(tickerSymbol));
     }
 
+    @Cacheable(value = "companies", keyGenerator = "customKeyGenerator")
+    public List<CompanyDto> getByCompanyID(long companyID) {
+        return mapAll(companyRepository.findCompanyByCompanyID(companyID));
+    }
+
     @CachePut(value = "companies", keyGenerator = "customKeyGenerator")
     public Company update(long companyID, CompanyDto companyDto) {
         Company company = companyRepository.findById(companyID).get();

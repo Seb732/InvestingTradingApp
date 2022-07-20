@@ -25,4 +25,6 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
      * @return - company with given ticker symbol
      */
     List<Company> findCompanyByTickerSymbol(String tickerSymbol);
+
+    List<Company> findCompanyByCompanyID(long companyID);
 }

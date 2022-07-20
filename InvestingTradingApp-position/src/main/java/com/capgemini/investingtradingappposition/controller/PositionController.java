@@ -30,7 +30,7 @@ public class PositionController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@Valid @RequestBody final PositionDTO position) {
+    public void create(@Valid @RequestBody final PositionDTO position) {
         positionService.save(position);
     }
 

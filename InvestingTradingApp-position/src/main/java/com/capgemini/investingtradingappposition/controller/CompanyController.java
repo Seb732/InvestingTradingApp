@@ -32,12 +32,16 @@ public class CompanyController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@Valid @RequestBody final CompanyDto companyDto) {
+    public void create(@Valid @RequestBody final CompanyDto companyDto) {
         companyService.save(companyDto);
     }
 
     @GetMapping
     public List<CompanyDto> read(@Valid @RequestParam final Map<String, String> allParams) {
+
+        if (allParams.containsKey("companyID")) {
+            return companyService.getByCompanyID(Long.parseLong(allParams.get("companyID")));
+        }
 
         if (allParams.containsKey("companyName")) {
             return companyService.getByCompanyName(allParams.get("companyName"));
