@@ -13,22 +13,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class NotificationListener {
 
-    @KafkaListener(topics = "user-create", groupId = "user-creation")
+    @KafkaListener(topics = "user-create", groupId = "user")
     public void listen(@Payload UserRegisteredEvent userRegisteredEvent) {
         log.info("User of email: " + userRegisteredEvent.getEmail() + " has been created");
     }
 
-    @KafkaListener(topics = "user-delete", groupId = "user-deletion")
+    @KafkaListener(topics = "user-delete", groupId = "user")
     public void listen(@Payload UserDeletedEvent userDeletedEvent) {
         log.info("User of email: " + userDeletedEvent.getEmail() + " has been deleted");
     }
 
-    @KafkaListener(topics = "position-buy", groupId = "position-buyinh")
+    @KafkaListener(topics = "position-buy", groupId = "position")
     public void listen(@Payload PositionBoughtEvent positionBoughtEvent) {
         log.info("Position has been added to the portfolio of ID: " + positionBoughtEvent.getInvestingAccountID());
     }
 
-    @KafkaListener(topics = "position-sell", groupId = "position-selling")
+    @KafkaListener(topics = "position-sell", groupId = "position")
     public void listen(@Payload PositionSoldEvent positionSoldEvent) {
         log.info("Position has been sold from portfolio of ID: " + positionSoldEvent.getInvestingAccountID());
     }
