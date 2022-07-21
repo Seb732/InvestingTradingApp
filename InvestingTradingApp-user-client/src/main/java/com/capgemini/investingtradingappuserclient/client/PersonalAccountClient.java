@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(path = "/user/personalAccount", name = "localhost:8080")
+@FeignClient(name = "user-service", contextId = "personalAccount", path = "/user/personalAccount")
 public interface PersonalAccountClient {
 
     @PutMapping("/{personalAccountID}/balance")

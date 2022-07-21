@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
-@FeignClient(path = "user/investingAccount", name = "localhost:8080")
+@FeignClient(name = "user-service", contextId = "investingAccount", path = "user/investingAccount")
 public interface InvestingAccountClient {
 
     @PostMapping("/position")

@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(path = "/company")
+@FeignClient(name = "position-service", contextId = "company", path = "/company")
 public interface CompanyClient {
 
     @PostMapping
