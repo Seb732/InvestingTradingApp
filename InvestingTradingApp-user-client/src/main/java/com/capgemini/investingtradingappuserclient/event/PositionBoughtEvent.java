@@ -16,7 +16,8 @@ public class PositionBoughtEvent {
 
     private long companyID;
 
+    private double ticker;
+
     private int size;
 
-    private double ticker;
 }

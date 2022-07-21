@@ -12,10 +12,6 @@ import lombok.Setter;
 @Setter
 public class UserDeletedEvent {
 
-    private String firstName;
-
-    private String lastName;
-
     private String email;
 
     private String teleNumb;

@@ -34,7 +34,7 @@ public class UserService {
         user.getInvestingAccount().setUser(user);
         user.getPersonalAccount().setUser(user);
         kafkaTemplate.send("user-create", user.getEmail(),
-                new UserRegisteredEvent(user.getFirstName(), user.getLastName(), user.getEmail(), user.getTeleNumb()));
+                new UserRegisteredEvent(user.getEmail(), user.getTeleNumb()));
         return userRepository.save(user);
     }
 
@@ -43,7 +43,7 @@ public class UserService {
         User user = userRepository.findById(userID).get();
         user.setActivityStatus(false);
         kafkaTemplate.send("user-delete", user.getEmail(),
-                new UserDeletedEvent(user.getFirstName(), user.getLastName(), user.getEmail(), user.getTeleNumb()));
+                new UserDeletedEvent(user.getEmail(), user.getTeleNumb()));
         userRepository.save(user);
     }
 
