@@ -5,6 +5,7 @@ import com.capgemini.investingtradingapppositionclient.dto.CompanyDto;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,34 +31,40 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
+    private static final String CIRCUIT_SERVICE = "companyService";
+    @Autowired
+    private CircuitBreakerFactory circuitBreakerFactory;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@Valid @RequestBody final CompanyDto companyDto) {
-        companyService.save(companyDto);
+
+        circuitBreakerFactory.create(CIRCUIT_SERVICE).run(() -> companyService.save(companyDto));
     }
 
     @GetMapping
     public List<CompanyDto> read(@Valid @RequestParam final Map<String, String> allParams) {
 
         if (allParams.containsKey("companyID")) {
-            return companyService.getByCompanyID(Long.parseLong(allParams.get("companyID")));
+            return circuitBreakerFactory.create(CIRCUIT_SERVICE).run(() ->
+                    companyService.getByCompanyID(Long.parseLong(allParams.get("companyID"))));
         }
 
         if (allParams.containsKey("companyName")) {
-            return companyService.getByCompanyName(allParams.get("companyName"));
+            return circuitBreakerFactory.create(CIRCUIT_SERVICE).run(() -> companyService.getByCompanyName(allParams.get("companyName")));
         }
 
         if (allParams.containsKey("tickerSymbol")) {
-            return companyService.getByTickerSymbol(allParams.get("tickerSymbol"));
+            return circuitBreakerFactory.create(CIRCUIT_SERVICE).run(() -> companyService.getByTickerSymbol(allParams.get("tickerSymbol")));
         }
 
-        return companyService.getAll();
+        return circuitBreakerFactory.create(CIRCUIT_SERVICE).run(() -> companyService.getAll());
     }
 
     @PutMapping("/{companyID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable final long companyID, @RequestBody final CompanyDto companyDto) {
-        companyService.update(companyID, companyDto);
+        circuitBreakerFactory.create(CIRCUIT_SERVICE).run(() -> companyService.update(companyID, companyDto));
     }
 
     @DeleteMapping

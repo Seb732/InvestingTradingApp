@@ -5,6 +5,7 @@ import com.capgemini.investingtradingappuser.exception.InsufficientFoundsExcepti
 import com.capgemini.investingtradingappuser.exception.InvalidAmountException;
 import com.capgemini.investingtradingappuser.service.PersonalAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,20 +23,49 @@ public class PersonalAccountController {
     @Autowired
     private PersonalAccountService personalAccountService;
 
+    private static final String CIRCUIT_SERVICE = "personalAccountService";
+    @Autowired
+    private CircuitBreakerFactory circuitBreakerFactory;
+
     @PutMapping("/balance")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void depositOrWithdraw(@RequestParam final String operationType, @PathVariable final long personalAccountID, @RequestParam final double amount) throws InvalidAmountException, InsufficientFoundsException, com.capgemini.investingtradingappposition.exception.InsufficientFoundsException {
+    public void depositOrWithdraw(@RequestParam final String operationType, @PathVariable final long personalAccountID, @RequestParam final double amount) {
 
         if (Objects.equals(operationType, "deposit")) {
-            personalAccountService.deposit(personalAccountID, amount);
+            circuitBreakerFactory.create(CIRCUIT_SERVICE).run(() -> {
+                try {
+                    personalAccountService.deposit(personalAccountID, amount);
+                } catch (InvalidAmountException e) {
+                    throw new RuntimeException(e);
+                }
+                return null;
+            });
         }
 
         if (Objects.equals(operationType, "withdrawal")) {
-            personalAccountService.withdraw(personalAccountID, amount);
+            circuitBreakerFactory.create(CIRCUIT_SERVICE).run(() -> {
+                try {
+                    personalAccountService.withdraw(personalAccountID, amount);
+                } catch (InvalidAmountException |
+                         com.capgemini.investingtradingappposition.exception.InsufficientFoundsException |
+                         InsufficientFoundsException e) {
+                    throw new RuntimeException(e);
+                }
+                return null;
+            });
         }
 
         if (Objects.equals(operationType, "transferIN")) {
-            personalAccountService.transferIN(personalAccountID, amount);
+            circuitBreakerFactory.create(CIRCUIT_SERVICE).run(() -> {
+                try {
+                    personalAccountService.transferIN(personalAccountID, amount);
+                } catch (InvalidAmountException |
+                         com.capgemini.investingtradingappposition.exception.InsufficientFoundsException |
+                         InsufficientFoundsException e) {
+                    throw new RuntimeException(e);
+                }
+                return null;
+            });
         }
     }
 
