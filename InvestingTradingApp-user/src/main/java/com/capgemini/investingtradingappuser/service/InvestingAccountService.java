@@ -39,7 +39,7 @@ public class InvestingAccountService {
         InvestingAccount investingAccount = investingAccountRepository.findById(position.getInvestingAccountID()).get();
         investingAccount.buy(position.getCompanyID(), position.getSize(), position.getTicker(), positionDTO.getInvestingAccountID());
         kafkaTemplate.send("position-buy", String.valueOf(investingAccount.getInvestingAccountID()),
-                new PositionBoughtEvent(investingAccount.getInvestingAccountID(), position.getCompanyID(), position.getSize(), position.getTicker()));
+                new PositionBoughtEvent(investingAccount.getInvestingAccountID(), position.getCompanyID(), position.getTicker(), position.getSize()));
         investingAccountRepository.save(investingAccount);
         return position;
     }
@@ -51,7 +51,7 @@ public class InvestingAccountService {
         position.setPositionStatus(PositionStatus.CLOSED);
         position.setCloseDate(LocalDateTime.now());
         kafkaTemplate.send("position-sell", String.valueOf(investingAccount.getInvestingAccountID()),
-                new PositionSoldEvent(positionID, investingAccount.getInvestingAccountID(), position.getCompanyID(), position.getSize(), position.getTicker()));
+                new PositionSoldEvent(positionID, investingAccount.getInvestingAccountID(), position.getCompanyID(), position.getTicker(), position.getSize()));
         investingAccountRepository.save(investingAccount);
         positionRepository.save(position);
     }

@@ -8,7 +8,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 
 @SpringBootApplication
 @EnableKafka
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.capgemini.investingtradingappuserclient", "com.capgemini.investingtradingapppositionclient"})
 @EnableEurekaClient
 public class InvestingTradingAppNotificationApplication {
 

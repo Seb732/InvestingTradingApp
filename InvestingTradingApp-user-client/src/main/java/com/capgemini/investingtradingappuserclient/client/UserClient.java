@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(path = "/user")
+@FeignClient(name = "localhost:8080", path = "/user")
 public interface UserClient {
 
     @PostMapping
