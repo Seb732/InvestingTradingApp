@@ -5,6 +5,8 @@ import com.capgemini.investingtradingappuser.exception.IncorrectTeleNumbExceptio
 import com.capgemini.investingtradingappuser.service.UserService;
 import com.capgemini.investingtradingappuserclient.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,37 +29,51 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private static final String CIRCUIT_SERVICE = "userService";
+    @Autowired
+    private RedisTemplate redisTemplate;
+    @Autowired
+    private CircuitBreakerFactory circuitBreakerFactory;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@Valid @RequestBody final UserDTO user) {
-        userService.save(user);
+
+        circuitBreakerFactory.create(CIRCUIT_SERVICE).run(() -> userService.save(user));
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@RequestParam final long userID) {
+
         userService.delete(userID);
     }
 
     @PutMapping("/{userID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable final long userID, @Valid @RequestBody final UserDTO user) throws IncorrectEmailException, IncorrectTeleNumbException {
-        userService.update(userID, user);
+    public void update(@PathVariable final long userID, @Valid @RequestBody final UserDTO user) {
+        circuitBreakerFactory.create(CIRCUIT_SERVICE).run(() -> {
+            try {
+                return userService.update(userID, user);
+            } catch (IncorrectTeleNumbException | IncorrectEmailException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
+
 
     @GetMapping
     public List<UserDTO> read(@RequestParam final Map<String, String> allParams) {
 
         if (allParams.containsKey("firstName") && allParams.containsKey("lastName")) {
-            return userService.findByFirstNameAndLastName(allParams.get("firstName"), allParams.get("lastName"));
+            return circuitBreakerFactory.create(CIRCUIT_SERVICE).run(() -> userService.findByFirstNameAndLastName(allParams.get("firstName"), allParams.get("lastName")));
         }
 
         if (allParams.containsKey("teleNumb") && allParams.containsKey("email")) {
-            return userService.findByTeleNumbAndEmail(allParams.get("teleNumb"), allParams.get("email"));
+            return circuitBreakerFactory.create(CIRCUIT_SERVICE).run(() -> userService.findByTeleNumbAndEmail(allParams.get("teleNumb"), allParams.get("email")));
         }
 
-        return userService.getAll();
+        return circuitBreakerFactory.create(CIRCUIT_SERVICE).run(() -> userService.getAll());
     }
-
 
 }

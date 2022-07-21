@@ -27,44 +27,55 @@ public class NotificationListener {
 
     @KafkaListener(topics = "user-create", groupId = "user")
     public void listen(@Payload UserRegisteredEvent userRegisteredEvent) {
-        log.info("User of email: " + userRegisteredEvent.getEmail() + " has been created" +
-                "\nDetails: " +
-                "\nFirst name: " + userClient.read(Map.of("email", userRegisteredEvent.getEmail(),
-                "teleNumb", userRegisteredEvent.getTeleNumb())).get(0).getFirstName() +
-                "\nLastName: " + userClient.read(Map.of("email", userRegisteredEvent.getEmail(),
-                "teleNumb", userRegisteredEvent.getTeleNumb())).get(0).getLastName() +
-                "\nPhone number: " + userRegisteredEvent.getTeleNumb());
+        log.info("""
+                   User of email: %s has been created
+                   Details:\040
+                   First name: %s
+                   LastName: %s
+                   Phone number: %s
+                """.formatted(userRegisteredEvent.getEmail(),
+                userClient.read(Map.of("email", userRegisteredEvent.getEmail(), "teleNumb", userRegisteredEvent.getTeleNumb())).get(0).getFirstName(),
+                userClient.read(Map.of("email", userRegisteredEvent.getEmail(), "teleNumb", userRegisteredEvent.getTeleNumb())).get(0).getLastName(),
+                userRegisteredEvent.getTeleNumb()));
     }
 
     @KafkaListener(topics = "user-delete", groupId = "user")
     public void listen(@Payload UserDeletedEvent userDeletedEvent) {
-        log.info("User of email: " + userDeletedEvent.getEmail() + " has been deleted" +
-                "\nDetails: " +
-                "\nFirst name: " + userClient.read(Map.of("email", userDeletedEvent.getEmail(),
-                "teleNumb", userDeletedEvent.getTeleNumb())).get(0).getFirstName() +
-                "\nLast name: " + userClient.read(Map.of("email", userDeletedEvent.getEmail(),
-                "teleNumb", userDeletedEvent.getTeleNumb())).get(0).getLastName() +
-                "\nPhone number: " + userDeletedEvent.getTeleNumb());
+        log.info("""
+                   User of email: %s has been deleted
+                   Details:
+                   First name: %s
+                   Last name: %s
+                   Phone number: %s
+                """
+                .formatted(userDeletedEvent.getEmail(), userClient.read(Map.of("email", userDeletedEvent.getEmail(),
+                        "teleNumb", userDeletedEvent.getTeleNumb())).get(0).getFirstName(), userClient.read(Map.of("email", userDeletedEvent.getEmail(),
+                        "teleNumb", userDeletedEvent.getTeleNumb())).get(0).getLastName(), userDeletedEvent.getTeleNumb()));
     }
 
     @KafkaListener(topics = "position-buy", groupId = "position")
     public void listen(@Payload PositionBoughtEvent positionBoughtEvent) {
-        log.info("Position has been added to the portfolio of ID: " + positionBoughtEvent.getInvestingAccountID() +
-                "\nPosition details: " +
-                "\nCompany name: " + companyClient.read(Map.of("companyID",
-                String.valueOf(positionBoughtEvent.getCompanyID()))).get(0).getCompanyName() +
-                "\nTicker: " + positionBoughtEvent.getTicker() +
-                "\nSize: " + positionBoughtEvent.getSize());
+        log.info("""
+                Position has been added to the portfolio of ID: %d
+                Position details:
+                Company name: %s
+                Ticker: %s
+                Size: %d
+                """
+                .formatted(positionBoughtEvent.getInvestingAccountID(), companyClient.read(Map.of("companyID",
+                        String.valueOf(positionBoughtEvent.getCompanyID()))).get(0).getCompanyName(), positionBoughtEvent.getTicker(), positionBoughtEvent.getSize()));
     }
 
     @KafkaListener(topics = "position-sell", groupId = "position")
     public void listen(@Payload PositionSoldEvent positionSoldEvent) {
-        log.info("Position has been sold from portfolio of ID: " + positionSoldEvent.getInvestingAccountID() +
-                "\nPosition details: " +
-                "\nCompany name: " + companyClient.read(Map.of("companyID",
-                String.valueOf(positionSoldEvent.getCompanyID()))).get(0).getCompanyName() +
-                "\nTicker: " + positionSoldEvent.getTicker() +
-                "\nSize: " + positionSoldEvent.getSize()
-        );
+        log.info("""
+                Position has been sold from portfolio of ID: %d
+                Position details:
+                Company name: %s
+                Ticker: %s
+                Size: %d
+                """
+                .formatted(positionSoldEvent.getInvestingAccountID(), companyClient.read(Map.of("companyID",
+                        String.valueOf(positionSoldEvent.getCompanyID()))).get(0).getCompanyName(), positionSoldEvent.getTicker(), positionSoldEvent.getSize()));
     }
 }

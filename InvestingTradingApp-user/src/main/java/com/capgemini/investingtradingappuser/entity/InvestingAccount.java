@@ -2,7 +2,6 @@ package com.capgemini.investingtradingappuser.entity;
 
 import com.capgemini.investingtradingappposition.entity.Position;
 import com.capgemini.investingtradingappposition.exception.InsufficientFoundsException;
-import com.capgemini.investingtradingappuser.exception.PositionNotFoundException;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,9 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,9 +30,6 @@ public class InvestingAccount extends Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "investing_account_id")
     private long investingAccountID;
-
-    @Transient
-    private List<Position> portfolio = new ArrayList<>();
 
     @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL, optional = false)
@@ -65,7 +58,6 @@ public class InvestingAccount extends Account {
         position.setSize(size);
         position.setTicker(ticker);
         position.setInvestingAccountID(investingAccountID);
-        portfolio.add(position);
     }
 
     /**
@@ -73,12 +65,8 @@ public class InvestingAccount extends Account {
      *
      * @param position - position which user want to sell
      */
-    public void sell(Position position) throws PositionNotFoundException {
-        if (!this.portfolio.contains(position)) {
-            throw new PositionNotFoundException();
-        }
-        this.balance += (double) portfolio.get(portfolio.indexOf(position)).getSize() * portfolio.get(portfolio.indexOf(position)).getTicker();
-        portfolio.remove(position);
+    public void sell(Position position) {
+        this.balance += (double) position.getSize() * position.getTicker();
     }
 
 

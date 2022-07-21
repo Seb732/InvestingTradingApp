@@ -41,13 +41,14 @@ public class InvestingAccountService {
         kafkaTemplate.send("position-buy", String.valueOf(investingAccount.getInvestingAccountID()),
                 new PositionBoughtEvent(investingAccount.getInvestingAccountID(), position.getCompanyID(), position.getTicker(), position.getSize()));
         investingAccountRepository.save(investingAccount);
+        positionRepository.save(position);
         return position;
     }
 
     public void sellPosition(long positionID) throws com.capgemini.investingtradingappuser.exception.PositionNotFoundException {
         Position position = positionRepository.findById(positionID).get();
         InvestingAccount investingAccount = investingAccountRepository.findById(position.getInvestingAccountID()).get();
-        investingAccount.sell(positionRepository.findById(positionID).get());
+        investingAccount.sell(position);
         position.setPositionStatus(PositionStatus.CLOSED);
         position.setCloseDate(LocalDateTime.now());
         kafkaTemplate.send("position-sell", String.valueOf(investingAccount.getInvestingAccountID()),
